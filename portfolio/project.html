@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project</title>
+  <meta name="description" content="Engineering portfolio project">
+
+  <!-- Catches typos and missing files so the page can tell you what to fix.
+       Keep this above every other script. -->
+  <script>
+    window.__portfolioErrors = [];
+    window.addEventListener("error", function (event) {
+      var target = event.target;
+      if (target && target !== window && (target.src || target.href)) {
+        window.__portfolioErrors.push({ file: target.src || target.href, missing: true });
+      } else {
+        window.__portfolioErrors.push({ file: event.filename || "", line: event.lineno || 0, message: event.message || "" });
+      }
+    }, true);
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=B612+Mono&family=B612:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- ===== STYLES: keep these lines the same as in index.html ============== -->
+  <link rel="stylesheet" href="css/themes/circuit.css" data-style="circuit">      <!-- STYLE: Circuit board -->
+  <link rel="stylesheet" href="css/themes/hybrid.css" data-style="hybrid">        <!-- STYLE: Hybrid -->
+  <link rel="stylesheet" href="css/themes/blueprint.css" data-style="blueprint">  <!-- STYLE: Blueprint -->
+
+  <script src="content/site.js"></script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Built from content/projects.js. The ?id= in the address picks the project. -->
+  <div id="app">
+    <noscript><p class="noscript">This portfolio needs JavaScript. Turn it on and reload the page.</p></noscript>
+  </div>
+
+  <script src="content/projects.js"></script>
+
+  <script src="js/core.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/sections/gallery.js"></script>
+  <script src="js/project-page.js"></script>
+</body>
+</html>

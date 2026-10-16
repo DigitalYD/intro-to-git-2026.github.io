@@ -1,0 +1,78 @@
+/* ==========================================================================
+   STYLE: HYBRID
+   A circuit board drawn on blueprint paper: blue grid paper, white line
+   work, and copper for anything that's "live" (links, buttons, traces).
+
+   This file plus js/art/hybrid.js are the whole style.
+   To remove it:
+     1. Delete "hybrid" from `themes` in content/site.js. That's enough.
+     2. To delete the files too: delete this file and its STYLE: Hybrid
+        line in index.html and in project.html, then delete
+        js/art/hybrid.js and its STYLE: Hybrid line in index.html.
+   ========================================================================== */
+
+[data-theme="hybrid"] {
+  /* ---- Colors ------------------------------------------------------------ */
+  --paper: #143f72;                          /* the page */
+  --paper-deep: #10355f;                     /* the board in the drawing */
+  --panel: #10355f;                          /* cards, frames, title block */
+  --panel-edge: rgba(234, 242, 255, 0.24);
+  --ink: #eaf2ff;                            /* text and line work */
+  --ink-soft: #b9cfee;                       /* secondary text and notes */
+  --ink-faint: rgba(234, 242, 255, 0.24);    /* hairlines */
+  --copper: #d9ad5c;                         /* links, buttons, traces, pins */
+  --copper-bright: #f2cd80;                  /* copper on hover */
+  --copper-ink: #2a1d05;                     /* text on copper */
+  --led: #7cf29a;                            /* the status light */
+  --redline: #ff9080;                        /* error messages */
+
+  /* ---- Paper: big squares every 96px, small ones every 16px -------------- */
+  --page-texture:
+    linear-gradient(rgba(234, 242, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 242, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(rgba(234, 242, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 242, 255, 0.045) 1px, transparent 1px);
+  --page-texture-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+
+  /* ---- Chips and connectors: dark bodies outlined in ink ----------------- */
+  --chip-body: #0a1f3a;
+  --chip-edge: #eaf2ff;
+  --chip-ink: #eaf2ff;
+  --leg-size: 6px;
+
+  /* ---- The copper wire down the left side, from +3V3 to ground ------------ */
+  --rail-paint: #d9ad5c;
+  --rail-width: 2px;
+  --rail-label: "+3V3";
+  --rail-caps: block;
+  --junction-size: 10px;
+  --junction-fill: #d9ad5c;
+  --junction-edge: #d9ad5c;
+
+  /* ---- Type ---------------------------------------------------------------- */
+  --font-display: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --font-body: "B612", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "B612 Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --title-case: none;
+  --title-tracking: -0.015em;
+}
+
+/* ---- The drawing: a fab drawing of a small PCB (js/art/hybrid.js) -------- */
+.board .board-fill { fill: var(--paper-deep); }
+.board .ln { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; }
+.board .silk-ln { fill: none; stroke: var(--ink-soft); stroke-width: 1.2; }
+.board .dim-ln { fill: none; stroke: var(--ink-soft); stroke-width: 1; }
+.board .dim-fill { fill: var(--ink-soft); }
+.board .gap { fill: var(--paper); }
+.board .cu-trace { fill: none; stroke: var(--copper); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.board .cu-pin { fill: none; stroke: var(--copper); stroke-width: 3.5; }
+.board .cu-pad { fill: none; stroke: var(--copper); stroke-width: 2.4; }
+.board .cu-ring { fill: none; stroke: var(--copper); stroke-width: 3; }
+.board .cu-ring--via { stroke-width: 2.2; }
+.board .hole { fill: var(--paper); stroke: var(--ink-soft); stroke-width: 1; }
+.board .ink-dot { fill: var(--ink); }
+.board .led { fill: var(--led); }
+.board .led--off { fill: none; stroke: var(--ink-soft); stroke-width: 1.2; }
+.board text { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 14px; }
+.board .silk { font-size: 12.5px; letter-spacing: 0.06em; }
+.board .chip-mark { fill: var(--ink); font-family: var(--font-display); font-size: 24px; font-weight: 600; }

@@ -1,0 +1,11 @@
+# Store text files with LF line endings, so students on Windows, Mac, and
+# Linux don't see every line of a file "change" in their diffs.
+* text=auto eol=lf
+
+# Pictures and documents are binary: git should never touch their bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.pdf binary

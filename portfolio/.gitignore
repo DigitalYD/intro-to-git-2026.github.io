@@ -1,0 +1,14 @@
+# Operating system clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor settings and swap files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs and dependency folders, in case you add tools later
+*.log
+node_modules/

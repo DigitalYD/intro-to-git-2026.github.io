@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Monitor showing frequency bars, wired to an FPGA board">
+  <g fill="none" stroke="#eaf2ff" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="130" y="40" width="340" height="220" rx="10"/>
+    <path d="M290 260l-10 40h80l-10-40M244 300h152"/>
+    <rect x="430" y="300" width="160" height="76" rx="6"/>
+    <rect x="490" y="316" width="44" height="44"/>
+    <path d="M430 324h-12l-5 6v18l5 6h12"/>
+  </g>
+  <rect x="146" y="56" width="308" height="176" fill="none" stroke="#b9cfee" stroke-width="1.2"/>
+  <g fill="#d9ad5c">
+    <rect x="158" y="182" width="12" height="40"/><rect x="176" y="150" width="12" height="72"/><rect x="194" y="112" width="12" height="110"/><rect x="212" y="86" width="12" height="136"/>
+    <rect x="230" y="102" width="12" height="120"/><rect x="248" y="126" width="12" height="96"/><rect x="266" y="94" width="12" height="128"/><rect x="284" y="72" width="12" height="150"/>
+    <rect x="302" y="104" width="12" height="118"/><rect x="320" y="132" width="12" height="90"/><rect x="338" y="146" width="12" height="76"/><rect x="356" y="124" width="12" height="98"/>
+    <rect x="374" y="158" width="12" height="64"/><rect x="392" y="174" width="12" height="48"/><rect x="410" y="186" width="12" height="36"/><rect x="428" y="198" width="12" height="24"/>
+  </g>
+  <path d="M158 174h12M176 142h12M194 104h12M212 78h12M230 94h12M248 118h12M266 86h12M284 64h12M302 96h12M320 124h12M338 138h12M356 116h12M374 150h12M392 166h12M410 178h12M428 190h12" stroke="#eaf2ff" stroke-width="2"/>
+  <path d="M498 310v6M508 310v6M518 310v6M528 310v6M498 360v6M508 360v6M518 360v6M528 360v6M484 324h6M484 334h6M484 344h6M484 354h6M534 324h6M534 334h6M534 344h6M534 354h6" stroke="#d9ad5c" stroke-width="2.5"/>
+  <path d="M436 260C436 300 396 318 413 339" fill="none" stroke="#d9ad5c" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

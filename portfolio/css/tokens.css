@@ -1,0 +1,39 @@
+/* ==========================================================================
+   css/tokens.css: settings every style shares: the type scale, layout
+   sizes, and motion. Each style's colors and fonts live in its own file
+   in css/themes/.
+   ========================================================================== */
+
+:root {
+  /* Backup colors, used only if no style file loads */
+  --paper: #143f72;
+  --panel: #10355f;
+  --ink: #eaf2ff;
+  --ink-soft: #b9cfee;
+  --ink-faint: rgba(234, 242, 255, 0.24);
+  --copper: #d9ad5c;
+  --copper-bright: #f2cd80;
+  --copper-ink: #2a1d05;
+  --chip-body: #0a1f3a;
+  --chip-edge: #eaf2ff;
+  --chip-ink: #eaf2ff;
+  --led: #7cf29a;
+  --redline: #ff9080;
+  --font-display: "Chakra Petch", "Arial Narrow", sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, monospace;
+
+  /* ---- Type sizes ---------------------------------------------------------- */
+  --step--1: 0.8125rem;                               /* 13px notes and labels */
+  --step-0: 1rem;                                     /* 16px body text */
+  --step-1: 1.25rem;                                  /* 20px card titles */
+  --step-2: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem); /* section headings */
+  --step-hero: clamp(2.75rem, 1.6rem + 5vw, 5rem);    /* your name */
+
+  /* ---- Layout -------------------------------------------------------------- */
+  --page-max: 72rem;                     /* widest the content gets */
+  --gutter: clamp(1rem, 4vw, 2.5rem);    /* space at the page edges */
+  --rail: clamp(1.75rem, 5vw, 3.25rem);  /* room for the line on the left */
+  --line: 1.5px;                         /* weight of drawn lines */
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+}

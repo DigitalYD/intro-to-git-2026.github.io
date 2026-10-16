@@ -1,0 +1,82 @@
+/* ==========================================================================
+   STYLE: CIRCUIT BOARD
+   Green solder mask, gold pads, black chips, white silkscreen, and an
+   oscilloscope at the top of the home page.
+
+   This file plus js/art/circuit.js are the whole style.
+   To remove it:
+     1. Delete "circuit" from `themes` in content/site.js. That's enough.
+     2. To delete the files too: delete this file and its STYLE: Circuit
+        board line in index.html and in project.html, then delete
+        js/art/circuit.js and its STYLE: Circuit board line in index.html.
+   ========================================================================== */
+
+[data-theme="circuit"] {
+  /* ---- Colors ------------------------------------------------------------ */
+  --paper: #0f4d2e;                          /* solder mask, the page */
+  --paper-deep: #0b3f25;
+  --panel: #0c4226;                          /* cards, frames, title block */
+  --panel-edge: #2e7a51;
+  --ink: #f4f1e6;                            /* silkscreen white */
+  --ink-soft: #cfe3d6;
+  --ink-faint: rgba(244, 241, 230, 0.22);
+  --copper: #d6ad5b;                         /* gold-plated pads and traces */
+  --copper-bright: #efcd85;
+  --copper-ink: #2b2006;
+  --led: #7cf29a;
+  --redline: #ff9a8a;
+
+  /* ---- Paper: a faint dot grid, like PCB design software ------------------ */
+  --page-texture: radial-gradient(circle, rgba(244, 241, 230, 0.08) 1px, transparent 1.6px);
+  --page-texture-size: 24px 24px;
+
+  /* ---- Chips and connectors: black bodies, no outline --------------------- */
+  --chip-body: #151515;
+  --chip-edge: transparent;
+  --chip-ink: #e9e6dc;
+  --leg-size: 6px;
+
+  /* ---- A gold trace down the left side, with vias at each section -------- */
+  --rail-paint: #d6ad5b;
+  --rail-width: 3px;
+  --rail-label: "+3V3";
+  --rail-caps: block;
+  --junction-size: 14px;
+  --junction-fill: #0f4d2e;                  /* a via: a gold ring with a hole */
+  --junction-edge: #d6ad5b;
+
+  /* ---- The tagline is printed like silkscreen, without measurement arrows - */
+  --dim-lines: none;
+  --dim-ink: #d6ad5b;
+  --dim-case: uppercase;
+  --dim-tracking: 0.08em;
+  --dim-align: left;
+
+  /* ---- Type ---------------------------------------------------------------- */
+  --font-display: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --title-case: none;
+  --title-tracking: -0.01em;
+}
+
+/* ---- The drawing: an oscilloscope (js/art/circuit.js) -------------------- */
+.scope .case { fill: #121614; stroke: rgba(244, 241, 230, 0.16); stroke-width: 1.5; }
+.scope .screen { fill: #06140d; stroke: rgba(244, 241, 230, 0.3); stroke-width: 1.5; }
+.scope .bar { fill: #0a1f14; }
+.scope .grid { fill: none; stroke: #17402a; stroke-width: 1; }
+.scope .axis { fill: none; stroke: #2f6e49; stroke-width: 1; }
+.scope .ch1 { fill: none; stroke: #ffd84d; stroke-width: 2.5; stroke-linejoin: round; }
+.scope .ch2 { fill: none; stroke: #5fd4ff; stroke-width: 2.5; stroke-linejoin: round; }
+.scope .ch1-fill { fill: #ffd84d; }
+.scope .ch2-fill { fill: #5fd4ff; }
+.scope .knob { fill: #1d2420; stroke: #59675f; stroke-width: 1.5; }
+.scope .knob-cap { fill: #262e29; stroke: #3d4842; stroke-width: 1; }
+.scope .tick { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.scope .key { fill: var(--copper); }
+.scope .bnc { fill: none; stroke: var(--copper); stroke-width: 2.5; }
+.scope .bnc-pin { fill: var(--copper); }
+.scope text { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 13px; }
+.scope .t-ch1 { fill: #ffd84d; }
+.scope .t-ch2 { fill: #5fd4ff; }
+.scope .t-label { fill: var(--ink); letter-spacing: 0.06em; }

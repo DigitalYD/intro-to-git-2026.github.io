@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Weather station with an anemometer and a solar panel">
+  <g fill="none" stroke="#eaf2ff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M320 92V362M220 362H420"/>
+    <circle cx="320" cy="86" r="6"/>
+    <path d="M320 80V42M325 89L358 108M315 89L282 108"/>
+    <circle cx="320" cy="32" r="10"/><circle cx="367" cy="113" r="10"/><circle cx="273" cy="113" r="10"/>
+    <path d="M250 160H392M392 160L430 146V174Z"/>
+    <rect x="332" y="222" width="72" height="58" rx="4"/>
+    <path d="M404 222V182M320 248H332M312 214H320"/>
+    <circle cx="404" cy="178" r="4"/>
+    <path d="M222 214L306 188L318 240L234 266Z"/>
+  </g>
+  <path d="M250 160l14-8v16z" fill="#d9ad5c"/>
+  <path d="M250 205.3L262 257.3M278 196.7L290 248.7M228 240L312 214" stroke="#d9ad5c" stroke-width="1.6"/>
+  <path d="M314 232C322 232 326 236 332 240" fill="none" stroke="#d9ad5c" stroke-width="2.2" stroke-linecap="round"/>
+  <g fill="none" stroke="#b9cfee" stroke-width="1.5"><rect x="344" y="294" width="48" height="5" rx="2"/><rect x="344" y="305" width="48" height="5" rx="2"/><rect x="344" y="316" width="48" height="5" rx="2"/><rect x="344" y="327" width="48" height="5" rx="2"/></g>
+  <path d="M368 280v14M232 362l-10 12M252 362l-10 12M272 362l-10 12M292 362l-10 12M312 362l-10 12M332 362l-10 12M352 362l-10 12M372 362l-10 12M392 362l-10 12M412 362l-10 12" stroke="#b9cfee" stroke-width="1.2"/>
+  <path d="M334 22H482M426 362H482M470 22V362" fill="none" stroke="#b9cfee" stroke-width="1"/>
+  <path d="M470 22l-3.5 10h7zM470 362l-3.5-10h7z" fill="#b9cfee"/>
+  <text transform="translate(462 192) rotate(-90)" fill="#b9cfee" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" text-anchor="middle">2.4 m</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Top view of a line-following rover">
+  <path d="M320 24V376M56 205H584" fill="none" stroke="#b9cfee" stroke-width="1" stroke-dasharray="16 5 3 5" opacity=".55"/>
+  <path d="M320 34l9 16h-18z" fill="#d9ad5c"/>
+  <g fill="none" stroke="#eaf2ff" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="200" y="110" width="240" height="190" rx="26"/>
+    <rect x="166" y="150" width="30" height="110" rx="7"/>
+    <rect x="444" y="150" width="30" height="110" rx="7"/>
+    <rect x="246" y="74" width="148" height="26" rx="4"/>
+    <path d="M276 100v10M364 100v10"/>
+    <circle cx="320" cy="272" r="12"/>
+    <rect x="206" y="172" width="44" height="66" rx="4"/>
+    <rect x="390" y="172" width="44" height="66" rx="4"/>
+  </g>
+  <path d="M166 166h30M166 181h30M166 196h30M166 211h30M166 226h30M166 241h30M444 166h30M444 181h30M444 196h30M444 211h30M444 226h30M444 241h30" stroke="#b9cfee" stroke-width="1.2"/>
+  <g fill="none" stroke="#d9ad5c" stroke-width="2.4" stroke-linejoin="round">
+    <rect x="266" y="140" width="108" height="100"/>
+    <rect x="300" y="168" width="40" height="40"/>
+    <path d="M280 140v-22l-14-14v-4M300 140v-28l-7-7v-5M320 140v-40M340 140v-28l7-7v-5M360 140v-22l14-14v-4M266 205h-16M374 205h16"/>
+  </g>
+  <g fill="#d9ad5c"><circle cx="266" cy="87" r="5"/><circle cx="293" cy="87" r="5"/><circle cx="320" cy="87" r="5"/><circle cx="347" cy="87" r="5"/><circle cx="374" cy="87" r="5"/></g>
+  <path d="M166 268v80M474 268v80M166 336H474" fill="none" stroke="#b9cfee" stroke-width="1"/>
+  <path d="M166 336l10-3.5v7zM474 336l-10-3.5v7z" fill="#b9cfee"/>
+  <text x="320" y="327" fill="#b9cfee" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" text-anchor="middle">152</text>
+</svg>

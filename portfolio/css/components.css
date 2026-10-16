@@ -1,0 +1,1421 @@
+/* ==========================================================================
+   css/components.css: how each part of the page looks, shared by every
+   style, in the order the parts appear: header and style switch, hero,
+   the rail, each section type, the title block, the project page, and
+   error messages. Colors and per-style choices are variables set in the
+   style files in css/themes/.
+   ========================================================================== */
+
+/* ---- Header ------------------------------------------------------------- */
+.site-header {
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid var(--ink-faint);
+  background: var(--paper);
+}
+
+@media (min-width: 760px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  min-height: 4rem;
+  padding-block: 0.75rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--ink);
+}
+
+/* Your initials, drawn as a tiny chip */
+.brand__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.3rem;
+  margin-inline: 0.45rem;
+  border: var(--line) solid var(--chip-edge);
+  background: var(--chip-body);
+  color: var(--chip-ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+.brand__mark::before,
+.brand__mark::after {
+  content: "";
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 0.4rem;
+  background: repeating-linear-gradient(to bottom, var(--copper) 0 2px, transparent 2px 6px);
+}
+
+.brand__mark::before {
+  right: calc(100% + var(--line));
+}
+
+.brand__mark::after {
+  left: calc(100% + var(--line));
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  display: inline-block;
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--ink);
+}
+
+.nav a[aria-current="true"] {
+  border-bottom-color: var(--copper);
+  color: var(--ink);
+}
+
+@media (max-width: 759px) {
+  .nav {
+    gap: 0.25rem 1.1rem;
+  }
+
+  .nav a {
+    font-size: 0.9rem;
+  }
+}
+
+/* The style switch: a three-position slide switch, labeled SW1 */
+.site-header__end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.75rem;
+}
+
+.switch-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.switch__ref {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--count, 3), minmax(0, 1fr));
+  min-width: 0;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--ink-faint);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+/* The sliding part. Its position comes from --index, set by js/layout.js */
+.switch__thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / var(--count, 3));
+  border-radius: 4px;
+  background: var(--copper);
+  transform: translateX(calc(var(--index, 0) * 100%));
+  transition: transform 0.28s var(--ease);
+}
+
+.switch__option {
+  position: relative;
+  cursor: pointer;
+}
+
+.switch__option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch__option span {
+  display: block;
+  padding: 0.3rem 0.75rem;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.switch__option:hover span {
+  color: var(--ink);
+}
+
+.switch__option.is-active span {
+  color: var(--copper-ink);
+}
+
+.switch__option:has(input:focus-visible) {
+  border-radius: 4px;
+  outline: 2px solid var(--copper-bright);
+  outline-offset: 2px;
+}
+
+/* ---- Hero --------------------------------------------------------------- */
+.hero {
+  display: grid;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  padding-block: clamp(3rem, 8vw, 6rem) clamp(2rem, 5vw, 3.5rem);
+}
+
+@media (min-width: 960px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* Wraps the measurement line and your name so the line spans the name */
+.hero__measure {
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.hero__name {
+  font-size: var(--name-size, var(--step-hero));
+  line-height: 0.98;
+  letter-spacing: var(--title-tracking, -0.015em);
+  text-transform: var(--title-case, none);
+}
+
+.hero__intro {
+  max-width: 34rem;
+  margin-top: 1.4rem;
+  color: var(--ink-soft);
+  font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
+}
+
+.hero__intro p:last-child {
+  margin-bottom: 0;
+}
+
+.hero__art {
+  min-width: 0;
+}
+
+.hero__photo {
+  margin: 0;
+  padding: 0.5rem;
+  border: var(--line) solid var(--ink);
+  background: var(--panel);
+}
+
+.hero__photo img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* The measurement line: |<-- text -->| */
+.dim {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  color: var(--dim-ink, var(--ink-soft));
+  font-family: var(--font-mono);
+  text-transform: var(--dim-case, none);
+  letter-spacing: var(--dim-tracking, normal);
+  font-size: var(--step--1);
+  line-height: 1.3;
+}
+
+.dim__text {
+  flex: 0 1 auto;
+  text-align: var(--dim-align, center);
+}
+
+.dim__line {
+  position: relative;
+  display: var(--dim-lines, block);
+  flex: 1 1 1.5rem;
+  min-width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.dim__line::before,
+.dim__line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dim__line::before {
+  width: 1px;
+  height: 1.1rem;
+  background: currentColor;
+}
+
+.dim__line::after {
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.dim__line:first-child::before {
+  left: 0;
+}
+
+.dim__line:first-child::after {
+  left: 1px;
+  border-right: 9px solid currentColor;
+}
+
+.dim__line:last-child::before {
+  right: 0;
+}
+
+.dim__line:last-child::after {
+  right: 1px;
+  border-left: 9px solid currentColor;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 1.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.status__led {
+  flex: none;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--led);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--led) 22%, transparent);
+}
+
+/* Buttons are drawn as copper pads, with a drill hole */
+.pads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.pad {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.2rem 0.7rem 0.95rem;
+  border: var(--line) solid var(--copper);
+  border-radius: 3px;
+  color: var(--copper);
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.pad::before {
+  content: "";
+  display: var(--pad-hole, block);
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.pad:hover {
+  background: var(--copper);
+  color: var(--copper-ink);
+}
+
+.pad--primary {
+  background: var(--copper);
+  color: var(--copper-ink);
+}
+
+.pad--primary:hover {
+  border-color: var(--copper-bright);
+  background: var(--copper-bright);
+  color: var(--copper-ink);
+}
+
+/* ---- The drawing at the top of the home page ---------------------------- */
+/* Each style has its own drawing (js/art/) and colors it in its own file
+   (css/themes/). They all share this animation: lines marked "draw" are
+   drawn on and parts marked "fade" fade in. It plays when the page opens
+   and again whenever you switch styles. */
+.art {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.art.is-drawing .draw {
+  stroke-dasharray: 1;
+  animation: draw-line 1s var(--ease) both;
+  animation-delay: var(--d, 0s);
+}
+
+.art.is-drawing .draw--fast {
+  animation-duration: 0.55s;
+}
+
+.art.is-drawing .draw--sweep {
+  animation-duration: 1.3s;
+  animation-timing-function: linear;
+}
+
+.art.is-drawing .fade {
+  animation: fade-in 0.45s ease both;
+  animation-delay: var(--d, 0.8s);
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- The copper rail that wires every section together ------------------ */
+.circuit {
+  position: relative;
+  padding: 0.5rem 0 4.5rem var(--rail);
+}
+
+.circuit::before {
+  content: "";
+  position: absolute;
+  top: 1.2rem;
+  bottom: 1.6rem;
+  left: calc(var(--rail) / 2 - var(--rail-width, 2px) / 2);
+  width: var(--rail-width, 2px);
+  background: var(--rail-paint, var(--copper));
+}
+
+.rail-cap {
+  position: absolute;
+  display: var(--rail-caps, block);
+  left: calc(var(--rail) / 2);
+  margin: 0;
+  color: var(--copper);
+  transform: translateX(-50%);
+}
+
+/* Power symbol at the top of the rail */
+.rail-cap--top {
+  top: 0;
+  padding: 0 0.15rem 0.2rem;
+  border-bottom: 2px solid var(--copper);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.rail-cap--top::before {
+  content: var(--rail-label, "+3V3");
+}
+
+/* Ground symbol at the bottom */
+.rail-cap--bottom {
+  bottom: 0.6rem;
+  width: 1.75rem;
+}
+
+.rail-cap--bottom svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.rail-cap--bottom path {
+  fill: none;
+  stroke: var(--copper);
+  stroke-width: 2;
+}
+
+.section {
+  padding-top: clamp(2.75rem, 6vw, 4.5rem);
+  scroll-margin-top: 4.5rem;
+}
+
+/* Section heading: a junction dot on the rail, a copper stub, the title,
+   then a thin wire running out to the right */
+.section-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.section-head::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: calc(var(--rail) / 2);
+  height: var(--rail-width, 2px);
+  margin-top: calc(var(--rail-width, 2px) / -2);
+  background: var(--stub-paint, var(--copper));
+}
+
+.section-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.section-title {
+  font-size: var(--step-2);
+  letter-spacing: var(--title-tracking, normal);
+  text-transform: var(--title-case, none);
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(var(--rail) / -2 - var(--junction-size, 10px) / 2);
+  width: var(--junction-size, 10px);
+  height: var(--junction-size, 10px);
+  margin-top: calc(var(--junction-size, 10px) / -2);
+  border: 2px solid var(--junction-edge, var(--copper));
+  border-radius: 50%;
+  background: var(--junction-fill, var(--copper));
+}
+
+/* ---- Images ------------------------------------------------------------- */
+.media {
+  display: block;
+}
+
+.media img {
+  width: 100%;
+}
+
+/* Blueprint tint: photos become a cyanotype; hovering shows real colors */
+.tint {
+  background: var(--paper);
+  isolation: isolate;
+}
+
+.tint img {
+  filter: grayscale(1) contrast(1.15) brightness(0.82);
+  mix-blend-mode: screen;
+}
+
+.tint:hover img,
+.sheet:hover .tint img,
+.sheet:focus-within .tint img {
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+/* An empty box with an X: the drafting sign for "nothing here yet" */
+.void,
+.missing {
+  display: grid;
+  place-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  height: 100%;
+  min-height: 8rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.void {
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.6px), var(--ink-faint) calc(50% - 0.6px), var(--ink-faint) calc(50% + 0.6px), transparent calc(50% + 0.6px)),
+    linear-gradient(to bottom right, transparent calc(50% - 0.6px), var(--ink-faint) calc(50% - 0.6px), var(--ink-faint) calc(50% + 0.6px), transparent calc(50% + 0.6px));
+}
+
+.missing {
+  border: 1px dashed var(--redline);
+  color: var(--redline);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.missing code {
+  border: 0;
+  background: none;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* ---- About -------------------------------------------------------------- */
+.about {
+  display: grid;
+  align-items: start;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+@media (min-width: 820px) {
+  .about {
+    grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+  }
+
+  .about--text-only {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A photo frame with copper registration corners */
+.frame {
+  position: relative;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--ink-faint);
+  background: var(--panel);
+}
+
+.frame::before,
+.frame::after {
+  content: "";
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--copper);
+  pointer-events: none;
+}
+
+.frame::before {
+  top: -0.45rem;
+  left: -0.45rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.frame::after {
+  right: -0.45rem;
+  bottom: -0.45rem;
+  border-top: 0;
+  border-left: 0;
+}
+
+.about__photo img {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+@media (max-width: 819px) {
+  .about__photo {
+    width: min(100%, 15rem);
+  }
+}
+
+/* Spec table: label on the left, value on the right */
+.spec {
+  max-width: 38rem;
+  margin: 1.75rem 0 0;
+  border-top: 1px solid var(--ink-faint);
+}
+
+.spec__row {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, min(11rem, 34%)) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.spec dt {
+  padding-top: 0.15rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.spec dd {
+  margin: 0;
+}
+
+/* ---- Skills: chips in a DIP package, one skill per pin ------------------ */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.dip {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+}
+
+.dip__pins {
+  display: grid;
+  grid-template-rows: repeat(var(--rows, 3), minmax(2rem, auto));
+  align-content: center;
+  margin: 0;
+  padding: 0.9rem 0;
+  list-style: none;
+}
+
+.dip__pin {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.dip__pins--left .dip__pin {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* The legs: copper pads in most styles, thin lines in the blueprint */
+.dip__pins--left .dip__pin::after,
+.dip__pins--right .dip__pin::before {
+  content: "";
+  flex: none;
+  width: 0.85rem;
+  height: var(--leg-size, 6px);
+  background: var(--copper);
+}
+
+.dip__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 5rem;
+  padding: 1.25rem 0.6rem;
+  border: var(--line) solid var(--chip-edge);
+  border-radius: 3px;
+  background: var(--chip-body);
+  color: var(--chip-ink);
+  text-align: center;
+}
+
+/* The notch that marks the top of the chip */
+.dip__body::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--line) * -1);
+  left: 50%;
+  width: 1rem;
+  height: 0.5rem;
+  border: var(--line) solid var(--chip-edge);
+  border-top: 0;
+  border-radius: 0 0 1rem 1rem;
+  background: var(--paper);
+  transform: translateX(-50%);
+}
+
+/* The dot next to pin 1 */
+.dip__body::after {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  left: 0.55rem;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.dip__des {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.dip__val {
+  max-width: 7rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---- Projects: each card is a small drawing sheet ----------------------- */
+.sheets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Each card spans four rows of the grid (picture, text, links, title block)
+   and shares them with its neighbors, so the parts line up across a row. */
+.sheet {
+  position: relative;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  border: var(--line) solid var(--panel-edge, var(--ink-faint));
+  background: var(--panel);
+  transition: border-color 0.15s ease;
+}
+
+.sheet--linked:hover,
+.sheet:has(:focus-visible) {
+  border-color: var(--copper);
+}
+
+.sheet:has(:focus-visible) {
+  outline: 2px solid var(--copper-bright);
+  outline-offset: 3px;
+}
+
+.sheet__figure {
+  grid-row: 1;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ink-faint);
+  background: var(--paper);
+}
+
+.sheet__figure .media,
+.sheet__figure img {
+  height: 100%;
+}
+
+.sheet__figure img {
+  object-fit: cover;
+}
+
+.sheet__figure--contain img {
+  padding: 0.75rem;
+  object-fit: contain;
+}
+
+.sheet__body {
+  grid-row: 2;
+  padding: 1.1rem 1.15rem 1rem;
+}
+
+.sheet__title {
+  font-size: var(--step-1);
+}
+
+.sheet__link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Makes the whole card clickable while keeping one real link */
+.sheet__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.sheet__link:focus-visible {
+  outline: none;
+}
+
+.sheet--linked:hover .sheet__link {
+  color: var(--copper-bright);
+}
+
+.sheet__summary {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--ink-faint);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* The card's title block: date and role, at the bottom like a real sheet */
+.sheet__block {
+  grid-row: 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  border-top: 1px solid var(--ink-faint);
+}
+
+.sheet__block > div {
+  padding: 0.55rem 1.15rem;
+}
+
+.sheet__block > div + div {
+  border-left: 1px solid var(--ink-faint);
+}
+
+.sheet__block dt {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.sheet__block dd {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.sheet__links {
+  grid-row: 3;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.25rem 1.1rem;
+  margin: 0;
+  padding: 0.6rem 1.15rem 0.8rem;
+  border-top: 1px solid var(--ink-faint);
+  font-size: 0.9rem;
+}
+
+.sheet__more {
+  margin-left: auto;
+  color: var(--copper);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.empty {
+  color: var(--ink-soft);
+}
+
+/* ---- Timeline: a drawing's revision table ------------------------------- */
+.revs,
+.items {
+  max-width: 60rem;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ink-faint);
+  list-style: none;
+}
+
+.rev {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  column-gap: 1.1rem;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.rev__mark {
+  grid-row: 1 / span 2;
+  padding-top: 0.1rem;
+}
+
+.rev__mark svg {
+  width: 2.1rem;
+  height: auto;
+  overflow: visible;
+}
+
+.rev__mark path {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.rev__mark text {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.rev--latest .rev__mark path {
+  stroke: var(--copper);
+  stroke-width: 2;
+}
+
+.rev__date {
+  margin: 0 0 0.3rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.rev__title {
+  font-size: var(--step-1);
+}
+
+.rev__org {
+  margin: 0.2rem 0 0;
+  color: var(--ink-soft);
+}
+
+.rev__text {
+  margin-top: 0.65rem;
+}
+
+@media (min-width: 760px) {
+  .rev {
+    grid-template-columns: 2.25rem 10.5rem minmax(0, 1fr);
+  }
+
+  .rev__mark {
+    grid-row: auto;
+  }
+
+  .rev__date {
+    margin: 0;
+    padding-top: 0.3rem;
+  }
+}
+
+/* ---- List --------------------------------------------------------------- */
+.item {
+  display: grid;
+  gap: 0.2rem 2rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.item__title {
+  font-size: 1.15rem;
+}
+
+.item__sub {
+  margin: 0.15rem 0 0;
+  color: var(--ink-soft);
+}
+
+.item__text {
+  margin-top: 0.5rem;
+}
+
+.item__date {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+@media (min-width: 760px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .item__date {
+    padding-top: 0.25rem;
+    text-align: right;
+  }
+}
+
+/* ---- Gallery ------------------------------------------------------------ */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1.75rem;
+}
+
+.fig {
+  margin: 0;
+}
+
+.fig__media {
+  border: 1px solid var(--ink-faint);
+  background: var(--panel);
+}
+
+.fig__media img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.fig figcaption {
+  margin-top: 0.65rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.fig__num {
+  margin-right: 0.6rem;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+/* ---- Contact: a connector with one pin per link ------------------------- */
+.contact {
+  display: grid;
+  gap: 1.75rem;
+  max-width: 46rem;
+}
+
+.connector {
+  margin: 0;
+}
+
+.connector__ref {
+  margin-bottom: 0.6rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.connector__pins {
+  position: relative;
+  margin: 0;
+  padding: 0.35rem 0;
+  list-style: none;
+}
+
+/* The connector's body: a box down the left side */
+.connector__pins::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2.75rem;
+  border: var(--line) solid var(--chip-edge);
+  background: var(--chip-body);
+  pointer-events: none;
+}
+
+.pin-link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.75rem 2.25rem minmax(5.5rem, auto) minmax(0, 1fr);
+  align-items: center;
+  min-height: 3.1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pin-link__num {
+  color: var(--chip-ink);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.pin-link__leg {
+  position: relative;
+  height: 2px;
+  background: var(--copper);
+}
+
+.pin-link__leg::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -0.3rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid var(--copper);
+  border-radius: 50%;
+  background: var(--paper);
+  transform: translateY(-50%);
+}
+
+.pin-link__label {
+  padding-left: 1.1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.pin-link__value {
+  padding-left: 1rem;
+  color: var(--copper);
+  overflow-wrap: anywhere;
+}
+
+.pin-link:hover .pin-link__value {
+  color: var(--copper-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.pin-link:hover .pin-link__leg,
+.pin-link:hover .pin-link__leg::after {
+  border-color: var(--copper-bright);
+  background: var(--copper-bright);
+}
+
+@media (max-width: 560px) {
+  .pin-link {
+    grid-template-columns: 2.75rem 1.5rem minmax(0, 1fr);
+    grid-template-areas:
+      "num leg label"
+      "num leg value";
+    padding-block: 0.5rem;
+  }
+
+  .pin-link__num { grid-area: num; }
+  .pin-link__leg { grid-area: leg; }
+  .pin-link__label { grid-area: label; }
+
+  .pin-link__value {
+    grid-area: value;
+    padding-left: 1.1rem;
+  }
+}
+
+/* ---- Footer: the title block -------------------------------------------- */
+.site-footer {
+  padding-block: 1rem clamp(2.5rem, 6vw, 4rem);
+}
+
+.title-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 1px;
+  max-width: 36rem;
+  margin-left: auto;
+  border: var(--line) solid var(--ink);
+  background: var(--ink-soft);
+}
+
+.tb {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.55rem 0.8rem;
+  background: var(--panel);
+}
+
+.tb--title {
+  grid-column: span 2;
+}
+
+.tb--src {
+  grid-column: 1 / -1;
+}
+
+.tb__k {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+.tb__v {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+a.tb__v {
+  color: var(--copper);
+  text-decoration: none;
+}
+
+a.tb__v:hover {
+  text-decoration: underline;
+}
+
+/* ---- Project page ------------------------------------------------------- */
+.project {
+  padding-block: clamp(2rem, 6vw, 4rem);
+}
+
+.back {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.project__head {
+  max-width: 50rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.project__title {
+  font-size: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: var(--title-tracking, normal);
+  text-transform: var(--title-case, none);
+}
+
+.project__summary {
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  color: var(--ink-soft);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+}
+
+/* Date, role, and tools in a strip of cells */
+.spec--strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  max-width: none;
+  border: 1px solid var(--ink-faint);
+  background: var(--ink-faint);
+}
+
+.spec--strip .spec__row {
+  flex: 1 1 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.85rem;
+  border: 0;
+  background: var(--panel);
+}
+
+.spec--strip dt {
+  padding-top: 0;
+}
+
+.project__figure {
+  max-width: 60rem;
+  margin: 0 0 clamp(2rem, 5vw, 3rem);
+  border: 1px solid var(--ink-faint);
+  background: var(--panel);
+}
+
+.project__body {
+  margin-bottom: 3rem;
+}
+
+.project__gallery {
+  max-width: 60rem;
+  margin-bottom: 3rem;
+}
+
+.project__gallery .gallery {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink-faint);
+}
+
+.pager__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--ink-faint);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pager__link:hover {
+  border-color: var(--copper);
+  color: var(--ink);
+}
+
+.pager__link--next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.pager__label {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.pager__title {
+  color: var(--copper);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+/* ---- Error messages ("redlines") ---------------------------------------- */
+.redline {
+  max-width: 46rem;
+  padding: 1rem 1.25rem;
+  border: var(--line) solid var(--redline);
+  background: color-mix(in srgb, var(--redline) 12%, var(--paper));
+}
+
+.redline p {
+  margin: 0.4rem 0 0;
+}
+
+.redline .redline__title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.redline code {
+  color: var(--ink);
+}
+
+.fatal {
+  padding-block: 4rem;
+}

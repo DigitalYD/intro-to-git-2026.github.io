@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Circuit board layout drawing">
+  <g fill="none" stroke="#eaf2ff" stroke-width="2.2">
+    <rect x="70" y="60" width="500" height="280" rx="14"/>
+    <rect x="270" y="150" width="100" height="100"/>
+    <rect x="130" y="120" width="70" height="56"/>
+    <rect x="130" y="224" width="70" height="56"/>
+  </g>
+  <g fill="none" stroke="#b9cfee" stroke-width="1.2">
+    <rect x="110" y="104" width="112" height="192" stroke-dasharray="6 5"/>
+    <rect x="474" y="112" width="32" height="176"/>
+  </g>
+  <g fill="none" stroke="#d9ad5c" stroke-width="3">
+    <circle cx="98" cy="88" r="9"/><circle cx="542" cy="88" r="9"/><circle cx="98" cy="312" r="9"/><circle cx="542" cy="312" r="9"/>
+    <circle cx="490" cy="130" r="7"/><circle cx="490" cy="165" r="7"/><circle cx="490" cy="200" r="7"/><circle cx="490" cy="235" r="7"/><circle cx="490" cy="270" r="7"/>
+    <circle cx="84" cy="148" r="8"/><circle cx="84" cy="252" r="8"/>
+  </g>
+  <path stroke="#d9ad5c" stroke-width="3.5" d="M258 164h12M258 176h12M258 188h12M258 200h12M258 212h12M258 224h12M258 236h12M370 164h12M370 176h12M370 188h12M370 200h12M370 212h12M370 224h12M370 236h12M284 138v12M296 138v12M308 138v12M320 138v12M332 138v12M344 138v12M356 138v12M284 250v12M296 250v12M308 250v12M320 250v12M332 250v12M344 250v12M356 250v12M200 140h8M200 156h8M200 244h8M200 260h8M122 148h8M122 252h8"/>
+  <g fill="none" stroke="#d9ad5c" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M382 164H400L434 130H482"/>
+    <path d="M382 188H410L433 165H482"/>
+    <path d="M382 200H482"/>
+    <path d="M382 212H410L433 235H482"/>
+    <path d="M382 236H400L434 270H482"/>
+    <path d="M258 164H244L220 140H208"/>
+    <path d="M258 176H238L218 156H208"/>
+    <path d="M258 224H238L218 244H208"/>
+    <path d="M258 236H244L220 260H208"/>
+  </g>
+  <path d="M122 148H92M122 252H92" stroke="#d9ad5c" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#b9cfee" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="14">
+    <text x="270" y="284">U1</text><text x="206" y="130">U2</text><text x="206" y="292">U3</text><text x="474" y="104">J1</text>
+  </g>
+</svg>

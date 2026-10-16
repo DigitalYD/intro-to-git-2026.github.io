@@ -1,0 +1,88 @@
+/* ==========================================================================
+   STYLE: BLUEPRINT
+   White line work on blue grid paper, like a classic engineering drawing.
+   No copper: everything is drawn in white, and links are underlined.
+
+   This file plus js/art/blueprint.js are the whole style.
+   To remove it:
+     1. Delete "blueprint" from `themes` in content/site.js. That's enough.
+     2. To delete the files too: delete this file and its STYLE: Blueprint
+        line in index.html and in project.html, then delete
+        js/art/blueprint.js and its STYLE: Blueprint line in index.html.
+   ========================================================================== */
+
+[data-theme="blueprint"] {
+  /* ---- Colors ------------------------------------------------------------ */
+  --paper: #17457c;                          /* the page */
+  --paper-deep: #123a69;
+  --panel: #17457c;                          /* same as the paper: cards are outlines */
+  --panel-edge: rgba(238, 245, 255, 0.55);
+  --ink: #eef5ff;                            /* white line work */
+  --ink-soft: #b9d0ee;
+  --ink-faint: rgba(238, 245, 255, 0.3);
+  --copper: #eef5ff;                         /* "live" things are white here too */
+  --copper-bright: #ffffff;
+  --copper-ink: #123a69;                     /* text on white buttons */
+  --led: #eef5ff;
+  --redline: #ffb0a3;
+
+  /* ---- Paper: big squares every 80px, small ones every 16px -------------- */
+  --page-texture:
+    linear-gradient(rgba(238, 245, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 245, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(238, 245, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 245, 255, 0.05) 1px, transparent 1px);
+  --page-texture-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+
+  /* ---- Chips and connectors: outlines only, thin leader-line legs --------- */
+  --chip-body: transparent;
+  --chip-edge: #eef5ff;
+  --chip-ink: #eef5ff;
+  --leg-size: 1.5px;
+
+  /* ---- A center line (long dash, short dash) instead of a copper wire ----- */
+  --rail-paint: repeating-linear-gradient(to bottom, #b9d0ee 0 18px, transparent 18px 23px, #b9d0ee 23px 26px, transparent 26px 31px);
+  --rail-width: 1px;
+  --rail-caps: none;
+  --stub-paint: #b9d0ee;
+  --junction-size: 11px;
+  --junction-fill: #17457c;
+  --junction-edge: #eef5ff;
+
+  /* ---- Buttons are plain, without the copper pad's drill hole ------------- */
+  --pad-hole: none;
+
+  /* ---- Type: drafting lettering, capitals for titles ---------------------- */
+  --font-display: "B612", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "B612", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "B612 Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --title-case: uppercase;
+  --title-tracking: 0.03em;
+  --name-size: clamp(2.4rem, 1.4rem + 4.2vw, 4.25rem);
+}
+
+/* Without copper, these links need an underline to look clickable */
+[data-theme="blueprint"] .pin-link__value,
+[data-theme="blueprint"] .sheet__more,
+[data-theme="blueprint"] a.tb__v {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+/* Drawings (.svg files) are shown in white too, so no copper sneaks in */
+[data-theme="blueprint"] .media img[src$=".svg"] {
+  filter: grayscale(1) brightness(1.25);
+}
+
+/* ---- The drawing: a flange in two views (js/art/blueprint.js) ------------ */
+.part .thick { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+.part .thin { fill: none; stroke: var(--ink-soft); stroke-width: 1; }
+.part .center { fill: none; stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 16 4 3 4; }
+.part .cut { fill: none; stroke: var(--ink); stroke-width: 3.5; }
+.part .fill { fill: var(--ink-soft); }
+.part .gap { fill: var(--paper); }
+.part .hatch { stroke: var(--ink-soft); stroke-width: 1; }
+.part .hatched { fill: url(#bp-hatch); }
+.part text { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 13px; }
+.part .label { fill: var(--ink); letter-spacing: 0.08em; }

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <meta name="description" content="Engineering portfolio">
+
+  <!-- Catches typos and missing files so the page can tell you what to fix.
+       Keep this above every other script. -->
+  <script>
+    window.__portfolioErrors = [];
+    window.addEventListener("error", function (event) {
+      var target = event.target;
+      if (target && target !== window && (target.src || target.href)) {
+        window.__portfolioErrors.push({ file: target.src || target.href, missing: true });
+      } else {
+        window.__portfolioErrors.push({ file: event.filename || "", line: event.lineno || 0, message: event.message || "" });
+      }
+    }, true);
+  </script>
+
+  <!-- Fonts. Chakra Petch: headings. B612 and B612 Mono: hybrid and blueprint.
+       IBM Plex Sans and Mono: circuit board. Only the ones in use download. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=B612+Mono&family=B612:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap">
+
+  <!-- Shared by every style -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- ===== STYLES: one stylesheet each ======================================
+       The switch offers the styles listed in `themes` in content/site.js.
+       Deleting a style's files? Delete its line here and in project.html. -->
+  <link rel="stylesheet" href="css/themes/circuit.css" data-style="circuit">      <!-- STYLE: Circuit board -->
+  <link rel="stylesheet" href="css/themes/hybrid.css" data-style="hybrid">        <!-- STYLE: Hybrid -->
+  <link rel="stylesheet" href="css/themes/blueprint.css" data-style="blueprint">  <!-- STYLE: Blueprint -->
+
+  <!-- Your settings load here, before the page draws, so the right style
+       is on from the first frame -->
+  <script src="content/site.js"></script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- The page is built inside #app from the files in content/. -->
+  <div id="app">
+    <noscript><p class="noscript">This portfolio needs JavaScript. Turn it on and reload the page.</p></noscript>
+  </div>
+
+  <!-- Your projects -->
+  <script src="content/projects.js"></script>
+
+  <!-- The engine: you usually don't need to touch these -->
+  <script src="js/core.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/hero.js"></script>
+
+  <!-- ===== STYLE DRAWINGS: the picture at the top of the home page ==========
+       Deleting a style's files? Delete its line here too. -->
+  <script src="js/art/circuit.js"></script>     <!-- STYLE: Circuit board -->
+  <script src="js/art/hybrid.js"></script>      <!-- STYLE: Hybrid -->
+  <script src="js/art/blueprint.js"></script>   <!-- STYLE: Blueprint -->
+
+  <!-- Section types, one file each. Made a new one? Add its script tag here. -->
+  <script src="js/sections/about.js"></script>
+  <script src="js/sections/skills.js"></script>
+  <script src="js/sections/projects.js"></script>
+  <script src="js/sections/timeline.js"></script>
+  <script src="js/sections/list.js"></script>
+  <script src="js/sections/gallery.js"></script>
+  <script src="js/sections/text.js"></script>
+  <script src="js/sections/contact.js"></script>
+
+  <!-- Build the page -->
+  <script src="js/main.js"></script>
+</body>
+</html>
