@@ -19,10 +19,10 @@
 
 window.SITE = {
   // ---- About you -----------------------------------------------------------
-  name: "Yun Dong",
+  name: "Jordan Park",
 
   // Sits on the measurement line above your name.
-  tagline: "Electrical and Computer Engineering",
+  tagline: "Electrical and computer engineering, class of 2027",
 
   // One or two sentences under your name.
   intro: "I design embedded systems and the circuit boards they run on.",
@@ -41,9 +41,9 @@ window.SITE = {
 
   // Your links. They're listed in the Contact section.
   links: [
-    { label: "Email", text: "yud50@pitt.edu", url: "mailto:yud50@pitt.edu" },
-    { label: "GitHub", text: "github.com/your-username", url: "https://github.com/DigitalYD" },
-    { label: "LinkedIn", text: "linkedin.com/in/your-name", url: "https://www.linkedin.com/in/ydong50/" },
+    { label: "Email", text: "jordan.park@example.edu", url: "mailto:jordan.park@example.edu" },
+    { label: "GitHub", text: "github.com/your-username", url: "https://github.com/your-username" },
+    { label: "LinkedIn", text: "linkedin.com/in/your-name", url: "https://www.linkedin.com/in/your-name" },
   ],
 
   // ---- Title block (the box at the bottom of every page) -------------------
@@ -51,7 +51,7 @@ window.SITE = {
   revision: "C",
   updated: "October 2026",
   // Link to this site's code on GitHub. Use "" to hide it.
-  repo: "https://github.com/DigitalYD/Intro-to-Git-2026",
+  repo: "https://github.com/your-username/portfolio",
 
   // ---- Style ---------------------------------------------------------------
   // Three styles come with the site, and the switch in the top bar (SW1)

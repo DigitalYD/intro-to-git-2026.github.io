@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+
+  <!-- ==========================================================================
+       LAUNCHER: the page at this site's main address. It sends visitors to
+       the portfolio in the portfolio/ folder.
+
+       - To send visitors somewhere else, change "portfolio/" in BOTH places
+         marked LAUNCH TARGET.
+       - To show this page with a button instead of opening the portfolio
+         right away, set AUTO_OPEN to false.
+       ========================================================================== -->
+  <script>
+    var LAUNCH_TARGET = "portfolio/";   // LAUNCH TARGET (1 of 2)
+    var AUTO_OPEN = true;
+
+    if (AUTO_OPEN) {
+      // replace() keeps this page out of the Back button's history.
+      // Anything after the address (like #projects) comes along.
+      location.replace(LAUNCH_TARGET + location.search + location.hash);
+    }
+  </script>
+  <!-- Does the same job when JavaScript is off -->
+  <noscript><meta http-equiv="refresh" content="0; url=portfolio/"></noscript>  <!-- LAUNCH TARGET (2 of 2) -->
+
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2rem;
+      box-sizing: border-box;
+      background-color: #143f72;
+      background-image:
+        linear-gradient(rgba(234, 242, 255, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234, 242, 255, 0.09) 1px, transparent 1px),
+        linear-gradient(rgba(234, 242, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234, 242, 255, 0.045) 1px, transparent 1px);
+      background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+      color: #eaf2ff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main { width: min(100%, 32rem); }
+    .note { margin: 0 0 0.9rem; color: #d9ad5c; font: 0.85rem ui-monospace, Menlo, Consolas, monospace; }
+    h1 { margin: 0; font-size: clamp(2.25rem, 7vw, 3.5rem); line-height: 1.05; }
+    p { color: #b9cfee; font-size: 1.1rem; line-height: 1.6; }
+    .pad {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+      padding: 0.75rem 1.3rem 0.75rem 1rem;
+      border-radius: 3px;
+      background: #d9ad5c;
+      color: #2a1d05;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .pad::before { content: ""; width: 0.55rem; height: 0.55rem; border: 2px solid currentColor; border-radius: 50%; }
+    .pad:hover { background: #f2cd80; }
+    .pad:focus-visible { outline: 2px solid #f2cd80; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="note" id="status">Opening the portfolio</p>
+    <h1 id="name">Portfolio</h1>
+    <p id="tagline">If it doesn't open on its own, use the button.</p>
+    <a class="pad" id="launch" href="portfolio/">Open the portfolio</a>
+  </main>
+
+  <script>
+    // Point the button at LAUNCH_TARGET, and show the name and tagline
+    // from the portfolio's content/site.js when this page stays up.
+    document.getElementById("launch").setAttribute("href", LAUNCH_TARGET);
+    if (!AUTO_OPEN) {
+      document.getElementById("status").textContent = "Engineering portfolio";
+      var settings = document.createElement("script");
+      settings.src = LAUNCH_TARGET + "content/site.js";
+      settings.onload = function () {
+        if (!window.SITE) return;
+        document.title = SITE.name + " | Portfolio";
+        document.getElementById("name").textContent = SITE.name;
+        document.getElementById("tagline").textContent = SITE.tagline || SITE.intro || "";
+      };
+      document.head.appendChild(settings);
+    }
+  </script>
+</body>
+</html>
