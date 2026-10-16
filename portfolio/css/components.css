@@ -116,7 +116,7 @@
   }
 }
 
-/* The style switch: a three-position slide switch, labeled SW1 */
+/* The style switch: a slide switch with one position per style, labeled SW1 */
 .site-header__end {
   display: flex;
   flex-wrap: wrap;
@@ -194,6 +194,28 @@
 
 .switch__option.is-active span {
   color: var(--copper-ink);
+}
+
+/* Phones: the switch takes the full width, and five positions still fit */
+@media (max-width: 559px) {
+  .switch-wrap {
+    width: 100%;
+  }
+
+  .switch {
+    flex: 1;
+  }
+
+  .switch__option span {
+    padding: 0.32rem 0.2rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 419px) {
+  .switch__ref {
+    display: none;
+  }
 }
 
 .switch__option:has(input:focus-visible) {

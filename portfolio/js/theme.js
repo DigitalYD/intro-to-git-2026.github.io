@@ -12,7 +12,7 @@
   "use strict";
 
   const STORAGE_KEY = "portfolio-style";
-  const LABELS = { circuit: "Circuit", hybrid: "Hybrid", blueprint: "Blueprint" };
+  const LABELS = { circuit: "Circuit", hybrid: "Hybrid", blueprint: "Blueprint", mcu: "MCU", couriers: "Couriers" };
   const site = window.SITE || {};
   const root = document.documentElement;
 

@@ -69,14 +69,17 @@
 
   // The style switch, SW1: one position per style in SITE.themes.
   // It's left out when there's only one style or SITE.themeSwitcher is false.
-  function themeSwitch() {
+  // The MCU and Couriers styles draw it again in their own top bars, so each
+  // copy gets its own radio group name.
+  function themeSwitch(group) {
+    const groupName = group || "page-style";
     const theme = P.theme;
     if (!theme || !theme.canSwitch) return "";
     const current = theme.current();
     const options = theme.list
       .map((name) =>
         `<label class="switch__option${name === current ? " is-active" : ""}">` +
-        `<input type="radio" name="page-style" value="${esc(name)}"${name === current ? " checked" : ""}>` +
+        `<input type="radio" name="${esc(groupName)}" value="${esc(name)}"${name === current ? " checked" : ""}>` +
         `<span>${esc(theme.label(name))}</span></label>`)
       .join("");
     return `<div class="switch-wrap">
@@ -157,11 +160,12 @@
 
   // Flipping the switch changes the style, slides the thumb over,
   // and recolors the favicon to match.
+  // One listener on the page catches every switch, including the ones the
+  // MCU and Couriers styles draw after the page is built.
   function wireSwitch() {
-    document.querySelectorAll(".switch input").forEach((input) => {
-      input.addEventListener("change", () => {
-        if (input.checked) P.theme.set(input.value, true);
-      });
+    document.addEventListener("change", (event) => {
+      const input = event.target;
+      if (input && input.checked && input.closest && input.closest(".switch")) P.theme.set(input.value, true);
     });
     document.addEventListener("portfolio:theme", (event) => {
       showSwitch(event.detail.theme);
@@ -199,5 +203,5 @@
     });
   }
 
-  P.layout = { setup, header, footer, fatal, enhance, sectionId, totalSheets };
+  P.layout = { setup, header, footer, fatal, enhance, sectionId, totalSheets, themeSwitch };
 })();

@@ -1,0 +1,232 @@
+/* ==========================================================================
+   STYLE: COURIERS
+   The page opens like a normal portfolio: your photo and a description.
+   Pick a section and a courier brings it: a drone, an RC car, a robot, or
+   a radio tower. It drops off the new page and carries the old one away.
+
+   This file and js/modes/couriers.js are the whole style.
+   To remove it:
+     1. Delete "couriers" from `themes` in content/site.js. That's enough.
+     2. To delete the files too: delete this file and its STYLE: Couriers
+        line in index.html and in project.html, then delete
+        js/modes/couriers.js and its STYLE: Couriers line in index.html.
+   ========================================================================== */
+
+/* ---- 1. Colors ------------------------------------------------------------ */
+[data-theme="couriers"] {
+  --cr-bg: #0c0f0e;
+  --cr-grid: rgba(235, 231, 221, 0.035);
+  --cr-panel: #131816;
+  --cr-line: rgba(235, 231, 221, 0.13);
+  --cr-text: #ebe7dd;
+  --cr-dim: #8f958f;
+  --cr-gold: #f1b44c;
+  --cr-gold-ink: #241a06;
+  --cr-cyan: #62f0ff;
+  --cr-cyan-glow: rgba(98, 240, 255, 0.5);
+  --cr-body: #1c2220;                       /* courier bodies */
+  --cr-edge: #3a423e;
+  --cr-metal: #5c6561;
+  --cr-floor-h: 28px;                       /* height of the delivery floor */
+
+  /* ---- 2. The usual style variables. Section content and project pages use these. */
+  --paper: var(--cr-bg);
+  --paper-deep: #080a09;
+  --panel: var(--cr-panel);
+  --panel-edge: #2a302d;
+  --ink: var(--cr-text);
+  --ink-soft: #bfc3bd;
+  --ink-faint: var(--cr-line);
+  --copper: var(--cr-gold);
+  --copper-bright: #ffd27a;
+  --copper-ink: var(--cr-gold-ink);
+  --led: var(--cr-cyan);
+  --redline: #ff9a8a;
+
+  --page-texture: linear-gradient(var(--cr-grid) 1px, transparent 1px), linear-gradient(90deg, var(--cr-grid) 1px, transparent 1px);
+  --page-texture-size: 32px 32px;
+
+  --chip-body: #151515;
+  --chip-edge: transparent;
+  --chip-ink: #e9e6dc;
+  --leg-size: 6px;
+
+  --rail-paint: var(--cr-gold);
+  --rail-width: 3px;
+  --rail-label: "+5V";
+  --rail-caps: block;
+  --junction-size: 14px;
+  --junction-fill: var(--cr-bg);
+  --junction-edge: var(--cr-gold);
+
+  --dim-lines: none;
+  --dim-ink: var(--cr-gold);
+  --dim-case: uppercase;
+  --dim-tracking: 0.08em;
+  --dim-align: left;
+
+  --font-display: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --title-case: none;
+  --title-tracking: -0.01em;
+}
+
+/* ---- 3. Header and menu (built by js/modes/couriers.js) ------------------- */
+.cr-mode { min-height: 100vh; color: var(--cr-text); }
+.cr-mode .cr-ico { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.cr-top { position: relative; z-index: 20; border-bottom: 1px solid var(--cr-line); background: color-mix(in srgb, var(--cr-bg) 90%, transparent); }
+@media (min-width: 760px) {
+  .cr-top { position: sticky; top: 0; backdrop-filter: blur(8px); }
+}
+.cr-top__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; max-width: var(--page-max); margin: 0 auto; padding: 10px var(--gutter) 0; }
+.cr-top__tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 16px; margin-left: auto; }
+.cr-menu { max-width: var(--page-max); margin: 0 auto; padding: 4px calc(var(--gutter) - 10px) 8px; overflow-x: auto; scrollbar-width: none; }
+.cr-menu ul { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.cr-menu a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; color: var(--cr-dim); font: 600 14px var(--font-display); text-decoration: none; white-space: nowrap; }
+.cr-menu a:hover { background: rgba(255, 255, 255, 0.05); color: var(--cr-text); }
+.cr-menu a[aria-current="page"] { background: rgba(241, 180, 76, 0.1); color: var(--cr-gold); }
+.cr-menu .cr-ico { width: 20px; height: 14px; }
+.cr-deliveries { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--cr-line); border-radius: 999px; background: none; color: var(--cr-dim); font: 500 12px var(--font-mono); white-space: nowrap; cursor: pointer; }
+.cr-deliveries__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cr-cyan); box-shadow: 0 0 8px var(--cr-cyan-glow); }
+.cr-deliveries[aria-pressed="false"] .cr-deliveries__dot { background: #454b48; box-shadow: none; }
+
+/* ---- 4. Home: your photo and description ------------------------------------- */
+.cr-page { max-width: var(--page-max); margin: 0 auto; padding: 52px var(--gutter) 140px; }
+.cr-home { display: grid; grid-template-columns: minmax(220px, 360px) minmax(0, 1fr); gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+.cr-home--no-photo { grid-template-columns: minmax(0, 1fr); }
+.cr-home__photo { margin: 0; }
+.cr-home__photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.cr-hello { margin: 0 0 8px; color: var(--cr-gold); font: 500 13px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.cr-name { margin: 0; outline: none; font: 700 clamp(2.6rem, 6vw, 4.4rem)/1 var(--font-display); }
+.cr-tagline { margin: 12px 0 20px; color: var(--cr-dim); font: 500 15px var(--font-mono); }
+.cr-intro { max-width: 60ch; font-size: 1.1rem; }
+.cr-home .status { margin-top: 1rem; }
+.cr-home .pads { margin-top: 1.25rem; }
+.cr-crew { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--cr-line); }
+.cr-crew__title { margin: 0 0 12px; color: var(--cr-dim); font: 500 13px var(--font-mono); }
+.cr-crew ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.cr-crew a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid var(--cr-line); border-radius: 8px; color: var(--cr-text); font-size: 14px; text-decoration: none; }
+.cr-crew a:hover { border-color: var(--cr-gold); }
+.cr-crew .cr-ico { flex: none; width: 24px; height: 17px; color: var(--cr-cyan); }
+.cr-crew small { display: block; color: var(--cr-dim); font: 500 11.5px var(--font-mono); }
+.cr-more { margin-top: 56px; }
+.cr-part { margin-top: 48px; scroll-margin-top: 130px; }
+.cr-part__title { margin: 0 0 20px; font-size: var(--step-2); }
+
+/* ---- 5. Section pages ---------------------------------------------------- */
+.cr-tag { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 4px 12px; border: 1px solid var(--cr-line); border-radius: 999px; color: var(--cr-dim); font: 500 12px var(--font-mono); }
+.cr-tag .cr-ico { width: 20px; height: 14px; color: var(--cr-cyan); }
+.cr-title { margin: 16px 0 28px; outline: none; font: 700 clamp(2.3rem, 5vw, 3.5rem)/1.02 var(--font-display); }
+
+/* ---- 6. Delivery dock: floor, packages, status message ------------------------ */
+.cr-dock { position: fixed; inset: 0; z-index: 30; overflow: hidden; pointer-events: none; }
+.cr-floor { position: absolute; left: 0; right: 0; bottom: 0; height: var(--cr-floor-h); border-top: 1px solid var(--cr-line); background: linear-gradient(#151b19, #0a0d0c); transform: translateY(105%); transition: transform 0.3s var(--ease); }
+.cr-floor::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: repeating-linear-gradient(-45deg, var(--cr-gold) 0 10px, #111 10px 20px); opacity: 0.8; }
+.cr-floor__pad { position: absolute; left: 50%; top: 9px; width: 150px; height: 12px; margin-left: -75px; border: 2px solid var(--cr-gold); border-radius: 50%; opacity: 0.55; }
+.cr-dock.is-active .cr-floor { transform: none; }
+.cr-crate { position: absolute; left: 0; top: 0; z-index: 3; border: 1.5px solid #4a4434; border-radius: 4px; background: linear-gradient(#2e2a22, #1d1a15); box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.25); opacity: 0; }
+.cr-crate::before, .cr-crate::after { content: ""; position: absolute; width: 12px; height: 12px; border: 2px solid var(--cr-gold); }
+.cr-crate::before { left: 4px; top: 4px; border-right: 0; border-bottom: 0; }
+.cr-crate::after { right: 4px; bottom: 4px; border-top: 0; border-left: 0; }
+.cr-crate__label { position: absolute; left: 12px; right: 12px; top: 12px; overflow: hidden; padding: 3px 6px; border-radius: 2px; background: var(--cr-gold); color: var(--cr-gold-ink); font: 700 11px/1.2 var(--font-display); letter-spacing: 0.06em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.cr-crate__code { position: absolute; left: 12px; bottom: 11px; width: 44px; height: 13px; background: repeating-linear-gradient(90deg, #ebe7dd 0 2px, transparent 2px 3px, #ebe7dd 3px 4px, transparent 4px 7px); opacity: 0.6; }
+.cr-crate__id { position: absolute; right: 12px; bottom: 9px; color: var(--cr-dim); font: 500 10px var(--font-mono); }
+.cr-transit { position: fixed; left: 50%; top: 42%; z-index: 5; display: flex; align-items: center; gap: 12px; margin: 0; color: var(--cr-dim); font: 500 14px var(--font-mono); white-space: nowrap; transform: translate(-50%, -50%); }
+.cr-transit[hidden] { display: none; }
+.cr-transit .cr-ico { width: 28px; height: 20px; color: var(--cr-cyan); }
+.cr-transit__dots::after { content: ""; animation: cr-dots 1.2s steps(4) infinite; }
+@keyframes cr-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+
+/* ---- 7. Couriers: drone, RC car, robot, radio tower ----------------------------- */
+.cr-courier { position: absolute; left: 0; top: 0; z-index: 2; }
+.cr-courier svg { display: block; width: 100%; height: 100%; overflow: visible; transition: transform 0.35s var(--ease); }
+@keyframes cr-spin { to { transform: rotate(360deg); } }
+@keyframes cr-blink { 50% { opacity: 0.2; } }
+/* Drone */
+.cr-courier .d-prop { fill: rgba(205, 214, 210, 0.55); transform-box: fill-box; transform-origin: center; animation: cr-prop 0.08s linear infinite alternate; }
+.cr-courier .d-prop--2 { animation-delay: -0.04s; }
+@keyframes cr-prop { to { transform: scaleX(0.15); } }
+.cr-courier .d-motor { fill: #262b29; }
+.cr-courier .d-cap, .cr-courier .d-stripe { fill: var(--cr-gold); }
+.cr-courier .d-arm { stroke: #2f3532; stroke-width: 5; stroke-linecap: round; }
+.cr-courier .d-body { fill: var(--cr-body); stroke: var(--cr-edge); stroke-width: 1.2; }
+.cr-courier .d-led { fill: var(--cr-cyan); animation: cr-blink 1s steps(2) infinite; }
+.cr-courier .d-cam { fill: #111; stroke: #444; stroke-width: 1.2; }
+.cr-courier .d-lens { fill: var(--cr-cyan); }
+.cr-courier .d-skid { fill: none; stroke: #3a413e; stroke-width: 3; stroke-linecap: round; }
+.cr-courier .d-winch { fill: #2a2f2d; }
+.cr-courier .d-cable { stroke: var(--cr-gold); stroke-width: 1.5; }
+.cr-courier .d-hook { fill: none; stroke: var(--cr-gold); stroke-width: 2; stroke-linecap: round; }
+.cr-courier.tilt-left svg { transform: rotate(-6deg); }
+.cr-courier.tilt-right svg { transform: rotate(6deg); }
+/* RC car */
+.cr-courier .c-whip { stroke: var(--cr-metal); stroke-width: 1.6; }
+.cr-courier .c-tip { fill: var(--cr-cyan); }
+.cr-courier .c-ant { transform-box: fill-box; transform-origin: 100% 100%; animation: cr-wobble 0.5s ease-in-out infinite alternate; }
+@keyframes cr-wobble { from { transform: rotate(-5deg); } to { transform: rotate(7deg); } }
+.cr-courier .c-rail { stroke: var(--cr-metal); stroke-width: 3; stroke-linecap: round; }
+.cr-courier .c-bed { fill: #2a2f2d; stroke: var(--cr-edge); }
+.cr-courier .c-cab { fill: var(--cr-body); stroke: var(--cr-edge); stroke-width: 1.2; }
+.cr-courier .c-glass { fill: rgba(98, 240, 255, 0.18); stroke: rgba(98, 240, 255, 0.5); }
+.cr-courier .c-chassis { fill: #222826; }
+.cr-courier .c-stripe { fill: var(--cr-gold); }
+.cr-courier .c-light { fill: var(--cr-cyan); }
+.cr-courier .c-tire { fill: #121514; stroke: #2c312f; stroke-width: 5; stroke-dasharray: 3 2.4; }
+.cr-courier .c-hub { fill: var(--cr-gold); }
+.cr-courier .c-spoke { stroke: #1a1a1a; stroke-width: 2; }
+.cr-courier .wheel { transform-box: fill-box; transform-origin: center; }
+.cr-courier.is-driving .wheel { animation: cr-spin 0.35s linear infinite; }
+.cr-courier.is-reversing .wheel { animation: cr-spin 0.35s linear infinite reverse; }
+/* Robot */
+.cr-courier .r-ant { stroke: var(--cr-metal); stroke-width: 2; }
+.cr-courier .r-tip { fill: var(--cr-gold); }
+.cr-courier .r-head, .cr-courier .r-body { fill: var(--cr-body); stroke: var(--cr-edge); stroke-width: 1.2; }
+.cr-courier .r-visor { fill: #0b1314; stroke: rgba(98, 240, 255, 0.5); }
+.cr-courier .r-eye { fill: var(--cr-cyan); transform-box: fill-box; transform-origin: center; animation: cr-look 3.2s infinite; }
+@keyframes cr-look { 0%, 92%, 100% { transform: none; } 95% { transform: scaleY(0.1); } }
+.cr-courier .r-neck { fill: #2a302d; }
+.cr-courier .r-panel { stroke: var(--cr-edge); stroke-width: 2; stroke-linecap: round; }
+.cr-courier .r-led { fill: var(--cr-cyan); animation: cr-blink 1.4s steps(2) infinite; }
+.cr-courier .r-arm { fill: none; stroke: var(--cr-metal); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.cr-courier .r-claw { fill: none; stroke: var(--cr-gold); stroke-width: 3; stroke-linecap: round; }
+.cr-courier .r-track { fill: #151817; stroke: #2e3431; stroke-width: 2; }
+.cr-courier .r-wheel { fill: #232826; stroke: var(--cr-gold); stroke-width: 1.5; }
+.cr-courier .r-tread { fill: none; stroke: #4a514d; stroke-width: 3; stroke-dasharray: 5 4; }
+.cr-courier.is-driving .r-tread { animation: cr-tread 0.4s linear infinite; }
+.cr-courier.is-reversing .r-tread { animation: cr-tread 0.4s linear infinite reverse; }
+@keyframes cr-tread { to { stroke-dashoffset: -18; } }
+/* Radio tower */
+.cr-courier .t-leg { stroke: var(--cr-metal); stroke-width: 3; }
+.cr-courier .t-brace { stroke: var(--cr-edge); stroke-width: 1.6; }
+.cr-courier .t-box { fill: var(--cr-body); stroke: var(--cr-edge); }
+.cr-courier .t-dish { fill: none; stroke: var(--cr-gold); stroke-width: 3; stroke-linecap: round; }
+.cr-courier .t-feed { stroke: var(--cr-gold); stroke-width: 2; }
+.cr-courier .t-whip { stroke: #9aa29e; stroke-width: 1.6; }
+.cr-courier .t-beacon { fill: #ff4a3d; animation: cr-blink 0.8s steps(2) infinite; }
+.cr-wave { position: absolute; z-index: 4; width: 60px; height: 60px; margin: -30px 0 0 -30px; border: 3px solid transparent; border-left-color: var(--cr-cyan); border-radius: 50%; filter: drop-shadow(0 0 4px var(--cr-cyan-glow)); }
+
+/* ---- 8. Tablets and phones ------------------------------------------------- */
+@media (max-width: 819px) {
+  .cr-home { grid-template-columns: minmax(0, 1fr); }
+  .cr-home__photo { max-width: 260px; }
+}
+@media (max-width: 700px) {
+  [data-theme="couriers"] { --cr-floor-h: 22px; }
+  .cr-page { padding-top: 30px; padding-bottom: 130px; }
+  /* The Deliveries switch joins your name's row; SW1 gets the next row */
+  .cr-top__row { gap: 8px 12px; padding-top: 8px; }
+  .cr-top__tools { display: contents; }
+  .cr-deliveries { margin-left: auto; }
+  .cr-menu { padding-top: 2px; padding-bottom: 6px; }
+  .cr-menu a { padding: 7px 10px; font-size: 13.5px; }
+  .cr-floor__pad { top: 7px; width: 110px; height: 9px; margin-left: -55px; }
+  .cr-crate__label { left: 9px; right: 9px; top: 9px; font-size: 9px; }
+  .cr-crate__code { left: 9px; bottom: 8px; width: 32px; height: 10px; }
+  .cr-crate__id { right: 9px; bottom: 6px; font-size: 8.5px; }
+}
+
+/* ---- 9. Reduced motion: the script switches deliveries off too -------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cr-mode *, .cr-mode *::before, .cr-mode *::after { animation: none !important; transition: none !important; }
+}

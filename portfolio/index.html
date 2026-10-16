@@ -21,10 +21,11 @@
   </script>
 
   <!-- Fonts. Chakra Petch: headings. B612 and B612 Mono: hybrid and blueprint.
-       IBM Plex Sans and Mono: circuit board. Only the ones in use download. -->
+       IBM Plex Sans and Mono: circuit board, MCU, and Couriers. Only the ones
+       in use download. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=B612+Mono&family=B612:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=B612+Mono&family=B612:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 
   <!-- Shared by every style -->
   <link rel="stylesheet" href="css/tokens.css">
@@ -37,6 +38,8 @@
   <link rel="stylesheet" href="css/themes/circuit.css" data-style="circuit">      <!-- STYLE: Circuit board -->
   <link rel="stylesheet" href="css/themes/hybrid.css" data-style="hybrid">        <!-- STYLE: Hybrid -->
   <link rel="stylesheet" href="css/themes/blueprint.css" data-style="blueprint">  <!-- STYLE: Blueprint -->
+  <link rel="stylesheet" href="css/themes/mcu.css" data-style="mcu">              <!-- STYLE: MCU -->
+  <link rel="stylesheet" href="css/themes/couriers.css" data-style="couriers">    <!-- STYLE: Couriers -->
 
   <!-- Your settings load here, before the page draws, so the right style
        is on from the first frame -->
@@ -77,5 +80,14 @@
 
   <!-- Build the page -->
   <script src="js/main.js"></script>
+
+  <!-- ===== STYLE PAGES: styles that are whole pages of their own =============
+       MCU and Couriers build their own page from your content when the switch
+       picks them. Deleting a style's files? Delete its lines here too.
+       Keep modes.js last: it starts whichever style is on. -->
+  <script src="js/modes/parts.js"></script>      <!-- STYLE: MCU -->
+  <script src="js/modes/mcu.js"></script>        <!-- STYLE: MCU -->
+  <script src="js/modes/couriers.js"></script>   <!-- STYLE: Couriers -->
+  <script src="js/modes/modes.js"></script>
 </body>
 </html>

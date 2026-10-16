@@ -1,0 +1,303 @@
+/* ==========================================================================
+   STYLE: MCU
+   You're the microcontroller in the middle of a circuit board. Every
+   section and project is a module floating around you. Click one and a
+   copper trace routes to it, it powers up, and its datasheet opens.
+
+   The board starts black. Visitors can switch it to green or purple with
+   the picker in the top bar (SITE.mcu in content/site.js controls both).
+
+   This file, js/modes/mcu.js, and js/modes/parts.js are the whole style.
+   To remove it:
+     1. Delete "mcu" from `themes` in content/site.js. That's enough.
+     2. To delete the files too: delete this file and its STYLE: MCU line in
+        index.html and in project.html, then delete js/modes/mcu.js and
+        js/modes/parts.js and their STYLE: MCU lines in index.html.
+   ========================================================================== */
+
+/* ---- 1. Board colors, one set per solder mask ----------------------------- */
+[data-theme="mcu"] {
+  --mask: #0c0f0e;
+  --mask-panel: #131816;
+  --mask-hatch: rgba(235, 231, 221, 0.03);
+  --silk: #ebe7dd;
+  --silk-soft: #bfc3bd;
+  --silk-dim: #8f958f;
+  --silk-faint: rgba(235, 231, 221, 0.14);
+  --cu-dim: #54442a;
+  --cu-on: #f1b44c;
+  --cu-glow: rgba(241, 180, 76, 0.45);
+  --signal: #62f0ff;
+  --signal-glow: rgba(98, 240, 255, 0.55);
+}
+
+[data-theme="mcu"][data-mask="green"] {
+  --mask: #0f4d2e;
+  --mask-panel: #0c4126;
+  --mask-hatch: rgba(47, 130, 86, 0.2);
+  --silk: #f4f1e6;
+  --silk-soft: #d3e2d7;
+  --silk-dim: #b8cfbf;
+  --silk-faint: rgba(244, 241, 230, 0.18);
+  --cu-dim: #2f8256;
+  --cu-on: #f2c25b;
+  --cu-glow: rgba(242, 194, 91, 0.5);
+  --signal: #ff4a3d;
+  --signal-glow: rgba(255, 74, 61, 0.6);
+}
+
+[data-theme="mcu"][data-mask="purple"] {
+  --mask: #3a1c5c;
+  --mask-panel: #311750;
+  --mask-hatch: rgba(120, 82, 163, 0.25);
+  --silk: #f3eefc;
+  --silk-soft: #ddd2f0;
+  --silk-dim: #c8b8e3;
+  --silk-faint: rgba(243, 238, 252, 0.18);
+  --cu-dim: #6a4893;
+  --cu-on: #f2c25b;
+  --cu-glow: rgba(242, 194, 91, 0.5);
+  --signal: #7cf29a;
+  --signal-glow: rgba(124, 242, 154, 0.55);
+}
+
+/* ---- 2. The usual style variables, made from the board colors ------------
+   Section content and project pages use these, so they match the board. */
+[data-theme="mcu"] {
+  --paper: var(--mask);
+  --paper-deep: color-mix(in srgb, var(--mask) 80%, #000);
+  --panel: var(--mask-panel);
+  --panel-edge: var(--cu-dim);
+  --ink: var(--silk);
+  --ink-soft: var(--silk-soft);
+  --ink-faint: var(--silk-faint);
+  --copper: var(--cu-on);
+  --copper-bright: #ffd27a;
+  --copper-ink: #2b2006;
+  --led: var(--signal);
+  --redline: #ff9a8a;
+
+  --page-texture: repeating-linear-gradient(45deg, var(--mask-hatch) 0 1px, transparent 1px 10px);
+  --page-texture-size: auto;
+
+  --chip-body: #151515;
+  --chip-edge: transparent;
+  --chip-ink: #e9e6dc;
+  --leg-size: 6px;
+
+  --rail-paint: var(--cu-on);
+  --rail-width: 3px;
+  --rail-label: "+3V3";
+  --rail-caps: block;
+  --junction-size: 14px;
+  --junction-fill: var(--mask);
+  --junction-edge: var(--cu-on);
+
+  --dim-lines: none;
+  --dim-ink: var(--cu-on);
+  --dim-case: uppercase;
+  --dim-tracking: 0.08em;
+  --dim-align: left;
+
+  --font-display: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --title-case: none;
+  --title-tracking: -0.01em;
+}
+
+/* ---- 3. The board page (built by js/modes/mcu.js) ------------------------- */
+html.has-mode[data-theme="mcu"],
+html.has-mode[data-theme="mcu"] body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.mcu-mode {
+  position: fixed;
+  inset: 0;
+  color: var(--silk);
+  font-family: var(--font-body);
+  --mw: 224px;
+  --mh: 136px;
+}
+
+.mcu-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Parts drawn on the board */
+.mcu-mode .pt-pad { fill: none; stroke: var(--cu-on); stroke-width: 2.4; }
+.mcu-mode .pt-hole, .mcu-mode .pt-notch { fill: var(--mask); }
+.mcu-mode .pt-lead { fill: none; stroke: #b3bab6; stroke-width: 1.6; }
+.mcu-mode .pt-body { fill: #151515; stroke: #2c2c2c; stroke-width: 1; }
+.mcu-mode .pt-mark { fill: #8f9592; font: 500 5.4px var(--font-mono); }
+.mcu-mode .pt-mark--can { fill: #5d6366; }
+.mcu-mode .pt-label { fill: var(--silk); font: 500 9px var(--font-mono); opacity: 0.8; }
+.mcu-mode .pt-led-halo { fill: var(--signal); opacity: 0.3; }
+.mcu-mode .pt-led-dome { fill: var(--signal); }
+.mcu-mode .pt-led-shine { fill: #fff; opacity: 0.3; }
+.mcu-mode .pt-tab { fill: #aab1b4; }
+.mcu-mode .pt-pin { fill: #aeb4b2; }
+.mcu-mode .pt-dot { fill: #3a3a3a; }
+.mcu-mode .pt-hdr { fill: #1c1c1c; stroke: #333; stroke-width: 1; }
+.mcu-mode .pt-pinsq { fill: var(--cu-on); }
+.mcu-mode .pt-ecap-sleeve { fill: #1f3a5f; }
+.mcu-mode .pt-ecap-stripe { fill: none; stroke: #d6dde2; stroke-width: 4; }
+.mcu-mode .pt-ecap-top { fill: #a7b0b4; }
+.mcu-mode .pt-ecap-vent { stroke: #7d878d; stroke-width: 1.4; }
+.mcu-mode .pt-smdpad { fill: var(--cu-on); }
+.mcu-mode .pt-smd-r { fill: #161616; }
+.mcu-mode .pt-smd-c { fill: #b89a6a; }
+.mcu-mode .pt-can { fill: #b7bec1; stroke: #8f979a; stroke-width: 1; }
+.mcu-mode .pt-can-hi { fill: #d9dee0; }
+.mcu-mode .pt-via .pt-pad { stroke-width: 1.6; }
+.mcu-tr { fill: none; stroke: var(--cu-on); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.mcu-silk { fill: var(--silk-dim); font: 500 11px var(--font-mono); }
+
+/* Ratsnest lines, routed traces, and the current flowing in them */
+.mcu-rat { fill: none; stroke: var(--silk); stroke-width: 1.1; stroke-dasharray: 3 5; opacity: 0.5; animation: mcu-ants 1.2s linear infinite; }
+@keyframes mcu-ants { to { stroke-dashoffset: -16; } }
+.mcu-trace { fill: none; stroke: var(--cu-on); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; filter: drop-shadow(0 0 4px var(--cu-glow)); transition: stroke-dashoffset 0.4s var(--ease), opacity 0s 0.4s; }
+.mcu-trace.is-drawn { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s var(--ease); }
+.mcu-flow, .mcu-rail-flow { fill: none; stroke: rgba(255, 251, 235, 0.88); stroke-width: 1.4; stroke-dasharray: 3 16; animation: mcu-flow 1s linear infinite; }
+.mcu-flow { opacity: 0; transition: opacity 0.2s; }
+.mcu-flow.is-on { opacity: 1; transition: opacity 0.3s 0.8s; }
+@keyframes mcu-flow { to { stroke-dashoffset: -19; } }
+.mcu-bus { fill: var(--silk-dim); font: 500 10.5px var(--font-mono); transition: fill 0.3s; }
+.mcu-bus.is-on { fill: var(--cu-on); }
+
+/* You: the chip in the middle */
+.mcu-chip { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.mcu-chip__svg { display: block; }
+.mcu-pin { fill: var(--cu-on); }
+.mcu-body { fill: #141414; stroke: #2b2b2b; stroke-width: 1.2; }
+.mcu-ring { fill: none; stroke: #222; stroke-width: 1; }
+.mcu-dot { fill: #303030; }
+.mcu-mark { position: absolute; display: grid; align-content: center; justify-items: center; gap: 4px; text-align: center; }
+.mcu-ref { margin: 0; color: #7d8380; font: 500 11px/1 var(--font-mono); }
+.mcu-name { max-width: 100%; margin: 0; color: #e6e4dc; font: 700 var(--name-size, 2rem)/1.02 var(--font-display); letter-spacing: 0.03em; text-transform: uppercase; overflow-wrap: normal; }
+.mcu-tag { margin: 0; color: #959b97; font: 500 var(--tag-size, 11px)/1.35 var(--font-mono); }
+.mcu-mark--tight .mcu-tag { display: none; }
+.mcu-open { position: relative; margin-top: 6px; padding: 0.4em 0.85em; border: 1px solid #3a3a3a; border-radius: 3px; background: transparent; color: var(--cu-on); font: 600 var(--open-size, 12px) var(--font-display); white-space: nowrap; cursor: pointer; }
+.mcu-open::after { content: ""; position: absolute; inset: calc(var(--chip-cover, 140px) * -1); }
+.mcu-chip:hover .mcu-open { border-color: var(--cu-on); }
+
+/* The modules floating around you */
+.mcu-mod { position: absolute; left: 0; top: 0; width: var(--mw); height: var(--mh); margin: calc(var(--mh) / -2) 0 0 calc(var(--mw) / -2); padding: 0; border: 0; background: none; color: var(--silk); font: inherit; text-align: left; cursor: grab; touch-action: none; }
+.mcu-mod.is-dragging { z-index: 5; cursor: grabbing; }
+.mcu-mod__body { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; gap: 6px; padding: 11px 13px 10px; border: 1px solid var(--silk-faint); border-radius: 8px; background: var(--mask-panel); animation: mcu-bob 7s ease-in-out infinite; animation-delay: var(--ph, 0s); transition: border-color 0.3s, box-shadow 0.3s, background-color 0.4s; }
+@keyframes mcu-bob { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(var(--bx, 4px), var(--by, -6px)); } }
+@keyframes mcu-bob-v { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, var(--by, -6px)); } }
+.mcu-mod.is-routing .mcu-mod__body, .mcu-mod.is-dragging .mcu-mod__body { animation-play-state: paused; }
+.mcu-mod:hover .mcu-mod__body { border-color: var(--silk-dim); }
+.mcu-mod.is-on .mcu-mod__body { border-color: var(--cu-on); box-shadow: 0 0 0 1px var(--cu-on), 0 0 18px var(--cu-glow); }
+.mcu-mod__top { display: flex; align-items: center; justify-content: space-between; color: var(--silk-dim); font: 500 11px/1 var(--font-mono); }
+.mcu-mod__led { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); transition: background 0.3s, box-shadow 0.3s; }
+.mcu-mod.is-on .mcu-mod__led { background: var(--signal); box-shadow: 0 0 8px var(--signal-glow); }
+.mcu-mod__mid { display: flex; align-items: center; gap: 11px; min-height: 0; }
+.mcu-mod__art { flex: none; display: grid; place-items: center; width: 58px; height: 42px; overflow: hidden; border-radius: 3px; background: rgba(0, 0, 0, 0.22); }
+.mcu-mod__art img { width: 100%; height: 100%; object-fit: cover; }
+.mcu-mod__art svg { width: 100%; height: 100%; }
+.mcu-mod__title { display: -webkit-box; overflow: hidden; font: 600 15px/1.15 var(--font-display); -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.mcu-mod__sub { display: block; margin-top: 2px; color: var(--silk-dim); font: 500 11px/1.3 var(--font-mono); }
+.mcu-mod__state { color: var(--silk-dim); font: 500 10.5px/1 var(--font-mono); }
+.mcu-mod__state::after { content: "Click to connect"; }
+.mcu-mod.is-on .mcu-mod__state { color: var(--cu-on); }
+.mcu-mod.is-on .mcu-mod__state::after { content: "Connected on " attr(data-bus); }
+.mcu-mod__hdr { position: absolute; width: 28px; height: 11px; border: 1px solid #333; border-radius: 2px; background: #1b1b1b; }
+.mcu-mod__hdr::before { content: ""; position: absolute; inset: 3px 4px; background: repeating-linear-gradient(90deg, var(--cu-dim) 0 3.5px, transparent 3.5px 7.5px); }
+.mcu-mod.is-on .mcu-mod__hdr::before { background: repeating-linear-gradient(90deg, var(--cu-on) 0 3.5px, transparent 3.5px 7.5px); }
+.mcu-mod[data-edge="bottom"] .mcu-mod__hdr { left: 50%; bottom: -6px; transform: translateX(-50%); }
+.mcu-mod[data-edge="top"] .mcu-mod__hdr { left: 50%; top: -6px; transform: translateX(-50%); }
+.mcu-mod[data-edge="left"] .mcu-mod__hdr { top: 50%; left: -14px; transform: translateY(-50%) rotate(90deg); }
+.mcu-mod[data-edge="right"] .mcu-mod__hdr { top: 50%; right: -14px; transform: translateY(-50%) rotate(90deg); }
+.mcu-art-board { fill: #1b1b1b; stroke: #333; }
+.mcu-art-lens1 { fill: #0b0b0b; stroke: #555; stroke-width: 1.5; }
+.mcu-art-lens2 { fill: #18233a; stroke: #3a4a6a; stroke-width: 1; }
+.mcu-art-shine { fill: #fff; opacity: 0.5; }
+.mcu-art-ant { fill: none; stroke: var(--cu-on); stroke-width: 2; }
+.mcu-art-screen { fill: #0b1314; stroke: rgba(98, 240, 255, 0.45); }
+.mcu-art-text { stroke: var(--signal); stroke-width: 2; stroke-linecap: round; opacity: 0.8; }
+
+/* Top bar, reset switch, and hint */
+.mcu-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; min-height: 56px; padding: 8px 18px; border-bottom: 1px solid var(--silk-faint); background: color-mix(in srgb, var(--mask) 88%, transparent); }
+.mcu-bar__name { margin: 0 auto 0 0; color: var(--silk-dim); font: 500 12px var(--font-mono); }
+.mcu-online { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: var(--silk-dim); font: 500 12px var(--font-mono); }
+.mcu-online__glass { padding: 2px 4px; border: 1px solid #2a2a2a; border-radius: 3px; background: #0b0b0b; }
+.mcu-seg { display: block; width: auto; height: 26px; }
+.mcu-mode .ss-seg { fill: rgba(255, 255, 255, 0.06); transition: fill 0.12s; }
+.mcu-mode .ss-seg.on { fill: var(--signal); filter: drop-shadow(0 0 3px var(--signal-glow)); }
+.mcu-btn { padding: 7px 13px; border: 1.5px solid var(--cu-on); border-radius: 3px; background: transparent; color: var(--cu-on); font: 600 13px/1 var(--font-display); white-space: nowrap; cursor: pointer; }
+.mcu-btn:hover, .mcu-btn--fill { background: var(--cu-on); color: #2b2006; }
+.mcu-mask { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; border: 0; }
+.mcu-mask__label { color: var(--silk-dim); font: 500 11.5px var(--font-mono); }
+.mcu-mask label { position: relative; width: 16px; height: 16px; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 50%; background: var(--sw); }
+.mcu-mask input { position: absolute; inset: -5px; margin: 0; opacity: 0; cursor: pointer; }
+.mcu-mask label:has(input:checked) { box-shadow: 0 0 0 2px var(--mask), 0 0 0 3.5px var(--cu-on); }
+.mcu-mask label:has(input:focus-visible) { outline: 2px solid var(--cu-on); outline-offset: 4px; }
+.mcu-reset { position: absolute; z-index: 4; display: grid; justify-items: center; gap: 3px; padding: 0; border: 0; background: none; color: var(--silk-dim); font: 500 10px var(--font-mono); cursor: pointer; transform: translate(-50%, -50%); }
+.mcu-reset__cap { width: 26px; height: 26px; border-radius: 3px; background: radial-gradient(circle, #1a1a1a 0 6px, #4a4a4a 6.5px 7.5px, #2a2a2a 8px); box-shadow: inset 0 0 0 2px #3a3a3a; }
+.mcu-reset:active .mcu-reset__cap { transform: scale(0.94); }
+.mcu-hint { position: absolute; left: 50%; bottom: 16px; z-index: 6; max-width: min(92vw, 640px); margin: 0; padding: 7px 14px; border: 1px solid var(--silk-faint); border-radius: 999px; background: color-mix(in srgb, var(--mask) 85%, #000); color: var(--silk); font: 500 12.5px/1.4 var(--font-mono); text-align: center; transform: translateX(-50%); }
+
+/* The datasheet that opens for a connected module */
+.mcu-ds { position: fixed; top: 0; right: 0; bottom: 0; z-index: 40; width: min(540px, 100vw); overflow-y: auto; border-left: 2px solid var(--cu-on); background: var(--mask-panel); transform: translateX(102%); visibility: hidden; transition: transform 0.35s var(--ease), visibility 0s 0.35s; }
+.mcu-ds.is-open { transform: none; visibility: visible; transition: transform 0.35s var(--ease); }
+.mcu-ds__head { position: sticky; top: 0; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 18px 24px 14px; border-bottom: 1px solid var(--silk-faint); background: var(--mask-panel); }
+.mcu-ds__ref { margin: 0; color: var(--cu-on); font: 500 12px var(--font-mono); }
+.mcu-ds__actions { grid-column: 2; grid-row: 1 / span 3; display: flex; align-items: start; gap: 8px; }
+.mcu-ds__title { grid-column: 1; margin: 0; outline: none; font-size: 1.8rem; }
+.mcu-ds__sub { grid-column: 1; margin: 2px 0 0; color: var(--silk-dim); font: 500 12px var(--font-mono); }
+.mcu-ds__body { padding: 22px 24px 48px; }
+.mcu-ds__body > * + * { margin-top: 1.25rem; }
+.mcu-ds__tagline { color: var(--cu-on); font: 500 12.5px/1.4 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.mcu-ds__intro { font-size: 1.08rem; }
+.mcu-ds__lead { font-size: 1.05rem; }
+.mcu-ds__figure { margin: 0; }
+.mcu-ds__figure .media, .mcu-ds__figure img { display: block; width: 100%; border-radius: 6px; }
+.mcu-ds__part { padding-top: 1.25rem; border-top: 1px solid var(--silk-faint); }
+.mcu-ds__heading { margin: 0 0 0.9rem; color: var(--silk-dim); font: 500 12px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+/* Section content is laid out for a full page. In the narrow datasheet,
+   everything stacks in one column. */
+.mcu-ds .about { grid-template-columns: minmax(0, 1fr); }
+.mcu-ds .about__photo { width: min(100%, 14rem); }
+.mcu-ds .revs, .mcu-ds .items { max-width: none; }
+
+/* ---- 4. Short screens, like a phone on its side --------------------------
+   js/modes/mcu.js adds is-compact when there's no room for the ring: the
+   modules line up in a column on each side of the chip, and the reset
+   switch moves into the top bar. */
+@keyframes mcu-bob-h { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(var(--bx, 4px), 0); } }
+.mcu-bar [data-reset] { display: none; }
+.mcu-mode.is-compact .mcu-bar [data-reset] { display: inline-block; }
+.mcu-mode.is-compact .mcu-reset { display: none; }
+.mcu-mode.is-compact .mcu-mod__art, .mcu-mode.is-compact .mcu-mod__sub { display: none; }
+.mcu-mode.is-compact .mcu-mod__body { gap: 2px; padding: 6px 10px; animation-name: mcu-bob-h; }
+.mcu-mode.is-compact .mcu-mod__title { font-size: 13px; -webkit-line-clamp: 1; }
+.mcu-mode.is-compact .mcu-mod__state { font-size: 9.5px; }
+
+/* ---- 5. Phones and tablets ----------------------------------------------- */
+@media (max-width: 759px) {
+  .mcu-mode { --mw: 118px; --mh: 76px; }
+  .mcu-mod__body { gap: 3px; padding: 8px 10px; animation-name: mcu-bob-v; }
+  .mcu-mod__art, .mcu-mod__sub { display: none; }
+  .mcu-mod__title { font-size: 13px; }
+  .mcu-mod__state { font-size: 9.5px; }
+  .mcu-mod__state::after { content: "Tap to connect"; }
+  .mcu-mod.is-on .mcu-mod__state::after { content: attr(data-bus); }
+  .mcu-bar { gap: 6px 10px; padding: 6px 10px; }
+  .mcu-bar__name, .mcu-mask__label, .mcu-online__label { display: none; }
+  .mcu-online { margin-right: auto; }
+  .mcu-ds { top: auto; left: 0; width: 100%; height: 84vh; border-top: 2px solid var(--cu-on); border-left: 0; border-radius: 12px 12px 0 0; transform: translateY(102%); }
+  .mcu-hint { bottom: 10px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcu-mode *, .mcu-mode *::before, .mcu-mode *::after { animation: none !important; transition: none !important; }
+}

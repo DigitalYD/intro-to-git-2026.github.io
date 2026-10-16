@@ -19,10 +19,10 @@
 
 window.SITE = {
   // ---- About you -----------------------------------------------------------
-  name: "Jordan Park",
+  name: "Yun Dong",
 
   // Sits on the measurement line above your name.
-  tagline: "Electrical and computer engineering, class of 2027",
+  tagline: "Electrical and Computer Engineering",
 
   // One or two sentences under your name.
   intro: "I design embedded systems and the circuit boards they run on.",
@@ -41,9 +41,9 @@ window.SITE = {
 
   // Your links. They're listed in the Contact section.
   links: [
-    { label: "Email", text: "jordan.park@example.edu", url: "mailto:jordan.park@example.edu" },
-    { label: "GitHub", text: "github.com/your-username", url: "https://github.com/your-username" },
-    { label: "LinkedIn", text: "linkedin.com/in/your-name", url: "https://www.linkedin.com/in/your-name" },
+    { label: "Email", text: "yud50@pitt.edu", url: "mailto:yud50@pitt.edu" },
+    { label: "GitHub", text: "github.com/DigitalYD", url: "https://github.com/DigitalYD" },
+    { label: "LinkedIn", text: "linkedin.com/in/ydong50/", url: "https://www.linkedin.com/in/ydong50/" },
   ],
 
   // ---- Title block (the box at the bottom of every page) -------------------
@@ -51,22 +51,42 @@ window.SITE = {
   revision: "C",
   updated: "October 2026",
   // Link to this site's code on GitHub. Use "" to hide it.
-  repo: "https://github.com/your-username/portfolio",
+  repo: "https://github.com/DigitalYD/intro-to-git-2026.github.io",
 
   // ---- Style ---------------------------------------------------------------
-  // Three styles come with the site, and the switch in the top bar (SW1)
+  // Five styles come with the site, and the switch in the top bar (SW1)
   // flips between them:
   //   "circuit"    green circuit board, gold pads, an oscilloscope
   //   "hybrid"     a circuit board drawn on blueprint paper
   //   "blueprint"  white line work on blue grid paper
+  //   "mcu"        you're the chip in the middle of a black circuit board;
+  //                every section is a module you wire up to read it
+  //   "couriers"   your photo and intro first; a drone, an RC car, a robot,
+  //                or a radio tower brings each section when it's picked
   //
   // TO REMOVE A STYLE: delete its name from this list. That's all it takes.
   // Keep just one name and the switch disappears. (To delete the style's
   // files too, see "Remove a style" in README.md.)
-  themes: ["circuit", "hybrid", "blueprint"],
+  themes: ["circuit", "hybrid", "blueprint", "mcu", "couriers"],
 
   theme: "hybrid",        // the style visitors see first
   themeSwitcher: true,    // false hides the switch and always shows `theme`
+
+  // ---- MCU style settings --------------------------------------------------
+  mcu: {
+    mask: "black",        // board color it starts on: "black", "green", or "purple"
+    maskPicker: true,     // false hides the board color picker in its top bar
+    projectModules: 4,    // up to this many projects get a module each; more share one
+  },
+
+  // ---- Couriers style settings -----------------------------------------------
+  // Each section picks its courier below with courier: "drone", "car",
+  // "robot", or "radio". These settings cover everything else.
+  couriers: {
+    home: "robot",        // who brings the home page back
+    deliveries: true,     // false starts with deliveries off (pages switch instantly)
+    speed: 1,             // 2 makes every delivery twice as fast
+  },
 
   // ---- Look and feel -------------------------------------------------------
   tintPhotos: true,   // true: photos get a tint in the style's color (hover shows real colors)
@@ -86,6 +106,8 @@ window.SITE = {
   //   navLabel Optional shorter label for the menu
   //   nav      false keeps it on the page but out of the menu
   //   hidden   true hides it without deleting it
+  //   courier  Who delivers it in the Couriers style: "drone", "car",
+  //            "robot", or "radio" (leave it out and one is picked for you)
   sections: [
     {
       type: "about",
@@ -94,7 +116,7 @@ window.SITE = {
       photo: "assets/images/profile.svg",
       photoAlt: "Portrait of Jordan Park",
       text: `
-        I'm a junior at State University studying electrical and computer engineering.
+        I'm a Graduate Student at University of Pittsburgh studying Masters in Electrical and Computer Engineering.
         My favorite part of any project is the moment a schematic turns into something that blinks.
 
         Outside of class I lead firmware for the robotics club and keep the lab's 3D printers alive.
@@ -110,6 +132,7 @@ window.SITE = {
     {
       type: "skills",
       id: "skills",
+      courier: "robot",
       title: "Skills",
       // Each group is drawn as one chip. Four to eight skills per group looks best.
       groups: [
@@ -122,6 +145,7 @@ window.SITE = {
     {
       type: "projects",
       id: "projects",
+      courier: "car",
       title: "Projects",
       // The cards come from content/projects.js.
     },
@@ -129,6 +153,7 @@ window.SITE = {
     {
       type: "timeline",
       id: "experience",
+      courier: "drone",
       title: "Experience",
       // Newest first. Revision letters (A, B, C...) are added for you.
       items: [
@@ -182,6 +207,7 @@ window.SITE = {
     {
       type: "contact",
       id: "contact",
+      courier: "radio",
       title: "Contact",
       text: "Email is the fastest way to reach me. I usually reply within a day.",
     },

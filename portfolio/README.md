@@ -1,6 +1,6 @@
 # Engineering portfolio template
 
-A personal portfolio site for engineering students, in three styles: a green circuit board, a classic blueprint, and a hybrid of the two (a circuit board drawn on blueprint paper). A slide switch in the top bar flips between them. Keep all three, or delete the ones you don't want. It's plain HTML, CSS, and JavaScript: nothing to install, no build step, and it runs free on GitHub Pages.
+A personal portfolio site for engineering students, in five styles: a green circuit board, a classic blueprint, a hybrid of the two (a circuit board drawn on blueprint paper), an MCU board where you're the chip in the middle, and a robot courier page where a drone, an RC car, a robot, or a radio tower brings each section. A slide switch in the top bar flips between them. Keep them all, or delete the ones you don't want. It's plain HTML, CSS, and JavaScript: nothing to install, no build step, and it runs free on GitHub Pages.
 
 To make it yours, you edit two files and add your pictures:
 
@@ -56,7 +56,9 @@ portfolio/
 │   └── themes/           ← one file per style: its colors, fonts, and details
 │       ├── circuit.css
 │       ├── hybrid.css
-│       └── blueprint.css
+│       ├── blueprint.css
+│       ├── mcu.css
+│       └── couriers.css
 ├── js/
 │   ├── theme.js          Picks the style before the page draws; remembers the switch
 │   ├── core.js           Shared helpers: text formatting, images, error messages
@@ -68,7 +70,12 @@ portfolio/
 │   │   └── blueprint.js  a flange in two views
 │   ├── main.js           Builds the home page
 │   ├── project-page.js   Builds a project page
-│   └── sections/         One file per section type (about.js, skills.js, ...)
+│   ├── sections/         One file per section type (about.js, skills.js, ...)
+│   └── modes/            ← styles that are whole pages of their own
+│       ├── mcu.js        the MCU board
+│       ├── parts.js      the circuit board parts the MCU board draws
+│       ├── couriers.js   the drone, RC car, robot, and radio tower
+│       └── modes.js      starts whichever one the switch picks
 ├── .editorconfig         Keeps indentation the same in every editor
 ├── .gitattributes        Keeps line endings the same on Windows, Mac, and Linux
 ├── .gitignore            Files git should never commit
@@ -90,6 +97,8 @@ content/projects.js ──┘
 First, `index.html` loads your two content files, which create two JavaScript objects, `SITE` and `PROJECTS`. (`site.js` loads early, in the `<head>`, so `js/theme.js` can read your style settings and switch on the right style before anything is drawn.) Next the page loads the engine in `js/`. Each file in `js/sections/` registers one **section type**: a function that turns a section's data into HTML. Last, `main.js` walks through `SITE.sections` from top to bottom, finds the renderer that matches each section's `type`, and puts the result on the page. The menu is built from the same list, so a new section gets a menu link automatically.
 
 Styles work the same way. Every color, font, and style-specific detail is a CSS variable, and each file in `css/themes/` sets those variables inside its own `[data-theme="..."]` block. The switch changes a single attribute on the page, `data-theme`, and every part of the page follows.
+
+Two styles go further. MCU and Couriers change how the page works, not just how it looks, so each has a script in `js/modes/` that builds a page of its own from the same `SITE` and `PROJECTS`, using the same section renderers. When the switch picks one of them, `js/modes/modes.js` hides the normal page and starts it. Pick any other style and the normal page comes back. Project pages always use the normal layout, in the chosen style's colors.
 
 That separation is the point. You change content in one place, and the HTML, the menu, and the links update themselves. It also keeps your commits small and readable: "Add robot arm project" is a few lines in `projects.js`, not a hunt through HTML.
 
@@ -122,21 +131,49 @@ Open `content/site.js`. Every setting has a comment above it. The main ones:
 
 ## Pick a style
 
-The site comes with three styles. The slide switch in the top bar, labeled SW1 like a switch on a real board, flips between them and remembers each visitor's pick.
+The site comes with five styles. The slide switch in the top bar, labeled SW1 like a switch on a real board, flips between them and remembers each visitor's pick.
 
-| Style | What it looks like | The drawing at the top |
+| Style | What it looks like | What's at the top |
 | --- | --- | --- |
 | `circuit` | Green solder mask, gold pads, black chips, white silkscreen | An oscilloscope with your name on its screen |
 | `hybrid` | A circuit board drawn on blueprint paper | A fab drawing of a small board, with your initials on the chip |
 | `blueprint` | White line work on blue grid paper, no copper | A flange in two views, with a part number made from your initials |
+| `mcu` | A black circuit board with you as the chip in the middle | The whole page is the board: every section is a module you wire up to read |
+| `couriers` | A dark robotics lab | Your photo and intro; a courier brings each section when it's picked |
 
 Three settings near the top of `content/site.js` control them:
 
 ```js
-themes: ["circuit", "hybrid", "blueprint"],  // the styles the switch offers, in this order
-theme: "hybrid",                             // the style visitors see first
-themeSwitcher: true,                         // false hides the switch
+themes: ["circuit", "hybrid", "blueprint", "mcu", "couriers"],  // the styles the switch offers, in this order
+theme: "hybrid",                                               // the style visitors see first
+themeSwitcher: true,                                           // false hides the switch
 ```
+
+### The MCU and Couriers styles
+
+These two build a page of their own from your content, so there's nothing extra to edit. Each has a few settings in `content/site.js`.
+
+**MCU.** Every section in the menu becomes a module floating around the chip, and each project gets a module of its own. Click a module and a copper trace routes to it, it powers up, and its datasheet opens with that section. Your about section, and every section with `nav: false`, go in the chip's own datasheet, which opens when someone clicks your name.
+
+```js
+mcu: {
+  mask: "black",        // board color it starts on: "black", "green", or "purple"
+  maskPicker: true,     // false hides the board color picker in its top bar
+  projectModules: 4,    // up to this many projects get a module each; more share one
+},
+```
+
+**Couriers.** The page opens on your photo (from the about section), your intro, and your about text, with your `nav: false` sections below. Each section in the menu is a page of its own, and a courier brings it: it drops off the new page and carries the old one away. The browser's back and forward buttons send couriers too. Pick each section's courier with `courier:` in its block (`"drone"`, `"car"`, `"robot"`, or `"radio"`). Leave it out and one is picked by the section's type.
+
+```js
+couriers: {
+  home: "robot",        // who brings the home page back
+  deliveries: true,     // false starts with deliveries off (visitors can turn them on)
+  speed: 1,             // 2 makes every delivery twice as fast
+},
+```
+
+Visitors whose device asks for less motion get instant changes in both styles.
 
 ### Remove a style
 
@@ -148,24 +185,29 @@ To lock in one style, leave just one name in `themes` and the switch disappears 
 
 Taking a style out of `themes` is enough to remove it from the site. If you also want its files gone, every piece of a style is labeled `STYLE:` with its name:
 
-| Style | Its look | Its drawing |
+| Style | Its look | Its script |
 | --- | --- | --- |
 | Circuit board | `css/themes/circuit.css` | `js/art/circuit.js` |
 | Hybrid | `css/themes/hybrid.css` | `js/art/hybrid.js` |
 | Blueprint | `css/themes/blueprint.css` | `js/art/blueprint.js` |
+| MCU | `css/themes/mcu.css` | `js/modes/mcu.js` and `js/modes/parts.js` |
+| Couriers | `css/themes/couriers.css` | `js/modes/couriers.js` |
 
 1. Take its name out of `themes` in `content/site.js`.
-2. Delete its two files with `git rm`, so git records the deletion:
+2. Delete its files with `git rm`, so git records the deletion:
    ```bash
    git rm css/themes/blueprint.css js/art/blueprint.js
    ```
-3. Delete the three lines that pointed to those files. Search for `STYLE: Blueprint` (or whichever style you're removing): one `<link>` line in `index.html`, one in `project.html`, and one `<script>` line in `index.html`.
+   For MCU that's `git rm css/themes/mcu.css js/modes/mcu.js js/modes/parts.js`.
+3. Delete the lines that pointed to those files. Search for `STYLE: Blueprint` (or whichever style you're removing): one `<link>` line in `index.html`, one in `project.html`, and the `<script>` lines in `index.html` (one for most styles, two for MCU). Keep `js/modes/modes.js` either way; with no page styles left, it does nothing.
 
 Refresh the page. If anything's missing, the browser console (F12) names the file.
 
 ### Make your own style
 
 Copy a file in `css/themes/`, give it a new name like `neon.css`, and change the `[data-theme="..."]` at its top to `[data-theme="neon"]`. Add a matching line to the `<head>` of both HTML files, `<link rel="stylesheet" href="css/themes/neon.css" data-style="neon">`, then add `"neon"` to `themes` and change the colors. A drawing is optional; without a `js/art/neon.js`, the space next to your name stays empty.
+
+A style that's a whole page of its own, like MCU or Couriers, is a bigger project. Start from a copy of `js/modes/couriers.js`: it registers itself in `Portfolio.modes` with a `start` function that builds its page and a `stop` function that removes it, and `js/modes/modes.js` does the rest.
 
 ---
 
@@ -234,6 +276,7 @@ Each section of your page, and each tab in the menu, is one block in the `sectio
 | Remove one | Delete the block, or add `hidden: true` to keep it for later |
 | Keep one off the menu | Add `nav: false`. It stays on the page; only the menu link goes. |
 | Shorten a menu label | Add `navLabel: "Research"` |
+| Pick its courier in the Couriers style | Add `courier: "drone"` (or `"car"`, `"robot"`, `"radio"`) |
 | Add a new one | Copy a block, give it a new `id` and `title`, and pick a `type` |
 
 For example, a Research tab that uses the `text` type:
@@ -364,9 +407,11 @@ The color and font variables like `var(--copper)` come from the style files in `
 
 Each style's colors and fonts live in its own file in `css/themes/`, inside a block like `[data-theme="circuit"] { ... }`. Change a value there and it changes everywhere in that style. Sizes every style shares, like the type scale and page width, are in `css/tokens.css`.
 
+In the MCU style, every color comes from the board's solder mask, so change the mask colors at the top of `css/themes/mcu.css`.
+
 `--paper` is the page, `--ink` is text and line work, and `--copper` is everything you can click. The circuit and hybrid styles follow one rule: copper means "live". Links, buttons, traces, and pins are copper; everything else is drawn in ink. The blueprint style sets `--copper` to white, which is why it has no copper at all. Keep to the rule when you add things and they'll look like they belong.
 
-The fonts are [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch) for headings; [B612](https://fonts.google.com/specimen/B612) (Airbus designed it for cockpit displays) and B612 Mono in the hybrid and blueprint styles; and [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) and IBM Plex Mono in the circuit style. To swap one, pick a font on [Google Fonts](https://fonts.google.com), add it to the font `<link>` in the `<head>` of both `index.html` and `project.html`, and change the matching `--font-` variable in the style's file.
+The fonts are [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch) for headings; [B612](https://fonts.google.com/specimen/B612) (Airbus designed it for cockpit displays) and B612 Mono in the hybrid and blueprint styles; and [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) and IBM Plex Mono in the circuit, MCU, and Couriers styles. To swap one, pick a font on [Google Fonts](https://fonts.google.com), add it to the font `<link>` in the `<head>` of both `index.html` and `project.html`, and change the matching `--font-` variable in the style's file.
 
 ---
 
@@ -405,6 +450,10 @@ Make sure you saved `content/site.js`, then hard-refresh (see above). Saved visi
 ### A style shows up with the wrong colors
 
 Its stylesheet isn't loading. Check that `css/themes/<name>.css` exists and that its `STYLE:` line is still in both `index.html` and `project.html`. If you meant to delete the style, take its name out of `themes` too.
+
+### The MCU or Couriers style shows the normal page
+
+Its script isn't loading, or it stopped with an error, so the page fell back to the normal layout in that style's colors. Check that its file is in `js/modes/` and that its `STYLE:` lines are still in `index.html`, then look in the browser console (F12) for the error.
 
 ### A menu link doesn't go anywhere
 
