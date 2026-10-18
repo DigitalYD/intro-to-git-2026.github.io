@@ -22,10 +22,10 @@ window.SITE = {
   name: "Yun Dong",
 
   // Sits on the measurement line above your name.
-  tagline: "Electrical and Computer Engineering",
+  tagline: "M.S. ECE student, University of Pittsburgh",
 
   // One or two sentences under your name.
-  intro: "I design embedded systems and the circuit boards they run on.",
+  intro: "I build embedded systems end to end: custom PCBs, firmware in C, and Python tools that automate lab test equipment.",
 
   // A short status next to a green light. Use "" to hide it.
   status: "Open to summer 2027 internships",
@@ -48,7 +48,7 @@ window.SITE = {
 
   // ---- Title block (the box at the bottom of every page) -------------------
   // Like a real drawing: bump the revision letter when you make a big update.
-  revision: "C",
+  revision: "D",
   updated: "October 2026",
   // Link to this site's code on GitHub. Use "" to hide it.
   repo: "https://github.com/DigitalYD/intro-to-git-2026.github.io",
@@ -113,18 +113,19 @@ window.SITE = {
       type: "about",
       id: "about",
       title: "About",
+      // Replace profile.svg with your own photo, like "assets/images/yun.jpg".
       photo: "assets/images/profile.svg",
-      photoAlt: "Portrait of Jordan Park",
+      photoAlt: "Portrait of Yun Dong",
       text: `
-        I'm a Graduate Student at University of Pittsburgh studying Masters in Electrical and Computer Engineering.
-        My favorite part of any project is the moment a schematic turns into something that blinks.
-
-        Outside of class I lead firmware for the robotics club and keep the lab's 3D printers alive.
+        I'm a master's student in Electrical and Computer Engineering at the University of Pittsburgh,
+        where I also earned my B.S. in Computer Engineering. My favorite part of any project is the
+        moment a schematic turns into something that blinks.
       `,
       // Quick facts, shown as a small spec table: ["Label", "Value"]
       facts: [
-        ["Focus", "Embedded systems, PCB design"],
-        ["Graduating", "May 2027"],
+        ["Focus", "Embedded systems, PCB design, test automation"],
+        ["Degree", "M.S. ECE, expected December 2027"],
+        ["Based in", "Pittsburgh, PA"],
         ["Looking for", "Internships and co-ops"],
       ],
     },
@@ -136,9 +137,10 @@ window.SITE = {
       title: "Skills",
       // Each group is drawn as one chip. Four to eight skills per group looks best.
       groups: [
-        { name: "Languages", skills: ["C and C++", "Python", "Verilog", "MATLAB", "Assembly", "Rust"] },
-        { name: "Hardware", skills: ["PCB layout", "Soldering", "Oscilloscopes", "FPGAs", "Logic analyzers"] },
-        { name: "Tools", skills: ["KiCad", "Git", "Linux", "LTspice", "Vivado", "Fusion 360"] },
+        { name: "Languages", skills: ["Python", "C", "C++", "VHDL", "Java", "MATLAB"] },
+        { name: "Hardware", skills: ["PCB design", "Fine-pitch SMT rework", "Component-level repair", "Raspberry Pi", "FPGAs", "Lab instrument control"] },
+        { name: "Tools", skills: ["Git and GitHub", "Linux and Ubuntu Server", "ROS2", "Vivado", "NumPy and pandas", "Intel VTune"] },
+        { name: "Practices", skills: ["Test-driven development", "Agile and Scrum", "Code review", "Technical documentation"] },
       ],
     },
 
@@ -158,22 +160,72 @@ window.SITE = {
       // Newest first. Revision letters (A, B, C...) are added for you.
       items: [
         {
-          date: "Summer 2026",
-          title: "Firmware engineering intern",
-          org: "Northwind Robotics",
-          text: "Wrote motor-control firmware for a warehouse robot and cut its boot time by 40%.",
+          date: "Jun 2026 – present",
+          title: "Research Assistant",
+          org: "AMPED Lab, University of Pittsburgh",
+          text: `
+            - Building a Python GUI that runs the magnetic coil testbed, with instrument control and time-stamped CSV logging in one place instead of hand-entered setpoints and readings
+            - Porting the lab's MATLAB analysis to Python (NumPy and pandas), so results reproduce without a MATLAB license
+            - Characterizing magnetic coils, and repairing legacy test equipment in-house so test campaigns keep running
+          `,
         },
         {
-          date: "Since 2025",
-          title: "Teaching assistant, Digital Logic",
-          org: "State University",
-          text: "Run two lab sections a week and help students debug their first FPGA designs.",
+          date: "May 2024 – present",
+          title: "Electronics Advisor and Repair Technician",
+          org: "Student Electronic Resource Center, University of Pittsburgh",
+          text: `
+            - Review 50+ student designs a semester, matching microcontrollers to their power and I/O budgets and fixing parts and mounting plans before boards are fabricated
+            - Repair damaged PCBs down to the component level, reworking fine-pitch SMT parts under a microscope instead of refabricating
+          `,
         },
         {
-          date: "Since 2024",
-          title: "Firmware lead",
-          org: "Robotics Club",
-          text: "Lead a team of six on the competition robot's embedded software.",
+          date: "Sep – Dec 2025",
+          title: "Electrical Engineering Intern",
+          org: "LB Foster, Greentree, PA",
+          text: `
+            - Built a portable programmer that reflashes control boxes already deployed in the field: I designed the hardware interface and wrote the embedded C update routine, which erases and writes flash page by page with verification, then validated it on production units
+          `,
+        },
+        {
+          date: "May 2024 – Aug 2025",
+          title: "Research Intern",
+          org: "Pittsburgh Supercomputing Center",
+          text: `
+            - Placed third in the ISC25 OpenMX challenge after profiling the application with Intel VTune to find its bottlenecks and improve its runtime
+            - Kept the cluster up during competition benchmarking on Ubuntu Server by resolving dependency conflicts and tuning the OS for high-throughput workloads
+          `,
+        },
+      ],
+    },
+
+    {
+      type: "timeline",
+      id: "leadership",
+      courier: "robot",
+      title: "Leadership and teaching",
+      navLabel: "Teaching",
+      items: [
+        {
+          date: "Aug 2023 – present",
+          title: "Teaching Assistant",
+          org: "Swanson School of Engineering, University of Pittsburgh",
+          text: `
+            - Fundamentals of Prototyping, Apr 2024 – present
+            - Computer Modeling and Simulation Engineering, Jan – Apr 2026
+            - Software Construction and Evolution, Aug – Dec 2025
+            - Embedded Processors and Interfacing, Jan – Apr 2024
+            - Problem Solving with C++, Aug 2023 – Apr 2024
+          `,
+        },
+        {
+          date: "Aug 2022 – May 2025",
+          title: "Vice President and Business Manager",
+          org: "Robotics and Automation Society, University of Pittsburgh",
+          text: `
+            - Mentored members on electronics, programming, and robotics, guiding troubleshooting across hardware and software
+            - Organized workshops on embedded systems, CAD, sensor integration, and programming
+            - Managed the budget, resources, and planning that kept projects on schedule
+          `,
         },
       ],
     },
@@ -185,10 +237,15 @@ window.SITE = {
       nav: false,
       items: [
         {
-          date: "2023 – 2027",
-          title: "B.S. in electrical and computer engineering",
-          org: "State University",
-          text: "GPA 3.7. Coursework: embedded systems, signals and systems, VLSI design, computer architecture.",
+          date: "Expected Dec 2027",
+          title: "M.S. in Electrical and Computer Engineering",
+          org: "University of Pittsburgh, Swanson School of Engineering",
+        },
+        {
+          date: "Aug 2021 – Dec 2025",
+          title: "B.S. in Computer Engineering",
+          org: "University of Pittsburgh, Swanson School of Engineering",
+          text: "Focus areas: Autonomous Systems and Software Engineering",
         },
       ],
     },
@@ -199,8 +256,8 @@ window.SITE = {
       title: "Awards",
       nav: false,
       items: [
-        { title: "First place, hardware track", subtitle: "HackState 2025", date: "2025" },
-        { title: "Dean's list", subtitle: "State University", date: "Four semesters" },
+        { title: "Third place, OpenMX challenge", subtitle: "ISC25 International Supercomputing Competition", date: "June 2025" },
+        { title: "ECE Distinguished Service Award", subtitle: "University of Pittsburgh, Swanson School of Engineering", date: "Apr 2025" },
       ],
     },
 
